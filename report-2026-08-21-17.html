@@ -1,0 +1,1382 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>竞品爆点分析报告：猿辅导系「小猿口算 PK」（天级监控 · 2026-08-21 17:00）</title>
+<style>
+  :root {
+    --bg: #f8f9fa; --card: #ffffff; --border: #e2e8f0;
+    --text: #1a202c; --text-secondary: #64748b;
+    --accent: #3b82f6; --accent-light: #eff6ff;
+    --success: #22c55e; --warning: #f59e0b; --danger: #ef4444;
+    --purple: #8b5cf6; --pink: #ec4899;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.7; padding: 2rem 1rem;
+  }
+  .report-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white; padding: 2.5rem 2rem; border-radius: 16px;
+    margin-bottom: 2rem; box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
+  }
+  .report-header h1 { font-size: 1.6rem; margin-bottom: 1rem; }
+  .report-header .meta { font-size: 0.85rem; opacity: 0.9; }
+  .report-header .meta span { margin-right: 1.5rem; }
+  .section {
+    background: var(--card); border-radius: 12px; padding: 2rem;
+    margin-bottom: 1.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.06); border: 1px solid var(--border);
+  }
+  .section h2 {
+    font-size: 1.3rem; color: var(--accent); margin-bottom: 1rem;
+    padding-bottom: 0.5rem; border-bottom: 2px solid var(--accent-light);
+  }
+  .section h3 { font-size: 1.1rem; color: var(--text); margin: 1.5rem 0 0.8rem; }
+  .summary-box {
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    border-left: 4px solid #f59e0b; padding: 1.2rem 1.5rem;
+    border-radius: 0 8px 8px 0; margin: 1rem 0; font-size: 0.95rem;
+  }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.82rem; }
+  th { background: #f1f5f9; color: var(--text); font-weight: 600; text-align: left; padding: 0.6rem 0.5rem; border-bottom: 2px solid var(--border); white-space: nowrap; }
+  td { padding: 0.5rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+  tr:hover td { background: #f8fafc; }
+  td a { color: var(--accent); text-decoration: none; }
+  td a:hover { text-decoration: underline; }
+  ul, ol { padding-left: 1.5rem; margin: 0.5rem 0; }
+  li { margin: 0.3rem 0; font-size: 0.92rem; }
+  .tag { display: inline-block; padding: 1px 6px; border-radius: 4px; font-size: 0.72rem; font-weight: 500; margin: 1px 1px; }
+  .tag-bilibili { background: #dbeafe; color: #1d4ed8; }
+  .tag-weibo { background: #fef3c7; color: #d97706; }
+  .tag-douyin { background: #fce7f3; color: #be185d; }
+  .tag-xiaohongshu { background: #fee2e2; color: #dc2626; }
+  .tag-topic { background: #f0f9ff; color: #0369a1; font-size: 0.7rem; }
+  .formula {
+    background: #f8fafc; border: 1px solid var(--border); border-left: 3px solid var(--purple);
+    padding: 0.8rem 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; font-size: 0.88rem;
+  }
+  .formula code { background: #ede9fe; padding: 1px 6px; border-radius: 3px; font-size: 0.82rem; color: var(--purple); }
+  .rec-card {
+    background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+    border: 1px solid #86efac; border-radius: 10px; padding: 1.2rem 1.5rem; margin: 0.8rem 0;
+  }
+  .rec-card h4 { color: #16a34a; margin: 0 0 0.5rem; font-size: 0.95rem; }
+  .rec-card p { font-size: 0.88rem; margin: 0.3rem 0; }
+  .note {
+    background: #fef2f2; border-left: 4px solid var(--danger);
+    padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; font-size: 0.85rem; margin: 1rem 0;
+  }
+  .note-info {
+    background: #eff6ff; border-left: 4px solid var(--accent);
+    padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; font-size: 0.85rem; margin: 1rem 0;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  /* 左侧浮动目录 */
+  .toc {
+    position: fixed; left: 0; top: 0; bottom: 0; width: 220px;
+    background: #fff; border-right: 1px solid var(--border);
+    padding: 1.5rem 1rem; overflow-y: auto; z-index: 100;
+    box-shadow: 2px 0 8px rgba(0,0,0,0.04);
+  }
+  .toc h4 { font-size: 0.85rem; color: var(--accent); margin-bottom: 0.8rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--accent-light); }
+  .toc ul { list-style: none; padding: 0; margin: 0; }
+  .toc li { margin: 0.3rem 0; }
+  .toc a { display: block; font-size: 0.78rem; color: var(--text-secondary); text-decoration: none; padding: 0.3rem 0.5rem; border-radius: 4px; transition: all 0.15s; }
+  .toc a:hover { background: var(--accent-light); color: var(--accent); }
+  .toc .toc-sub { padding-left: 0.8rem; }
+  .toc .toc-sub a { font-size: 0.72rem; color: #94a3b8; }
+  /* 主内容右移 */
+  .container { max-width: 1100px; margin-left: 240px; }
+  .table-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .table-wrapper table { min-width: 100%; }
+  .table-wrapper td, .table-wrapper th { white-space: nowrap; }
+</style>
+</head>
+<body>
+<!-- 左侧浮动目录 -->
+<nav class="toc">
+  <h4> 目录</h4>
+  <ul>
+    <li><a href="#section-summary">一、摘要</a></li>
+    <li><a href="#section-overview">二、爆点总览</a>
+      <ul class="toc-sub">
+        <li><a href="#section-catalog">2.1 爆款素材分类</a></li>
+        <li><a href="#section-matrix">2.2 话题矩阵</a></li>
+        <li><a href="#section-data">2.3 数据表现</a></li>
+        <li><a href="#section-bilibili">B站 TOP10</a></li>
+        <li><a href="#section-douyin">抖音 TOP10</a></li>
+        <li><a href="#section-xiaohongshu">小红书 TOP10</a></li>
+        <li><a href="#section-weibo">微博 TOP5</a></li>
+        <li><a href="#section-blogger">2.8 博主维度汇总</a></li>
+        <li><a href="#section-trend">2.9 数据动态变化</a></li>
+      </ul>
+    </li>
+    <li><a href="#section-breakdown">三、爆点拆解</a></li>
+    <li><a href="#section-ads">四、广告素材借鉴</a></li>
+    <li><a href="#section-comments">五、评论区</a></li>
+  </ul>
+</nav>
+
+<div class="container">
+
+<!-- Header -->
+<div class="report-header">
+  <h1>20260821 今日竞品相关视频及话题播报</h1>
+  <div class="meta">
+    <span>📅 监控窗口：天级自动更新</span>
+    <span>🕐 报告时间：2026-08-21 17:00</span>
+    <span>🔍 数据来源：B站 + 微博 + 小红书 + 抖音</span>
+  </div>
+</div>
+
+<!-- 摘要 -->
+<div class="section">
+  <h2 id="section-summary">一、摘要</h2>
+  <div class="summary-box">
+    本期播报（2026-08-21 17:00）覆盖 <strong>B站、抖音、小红书、微博</strong> 四大平台，监控关键词包括小猿口算、口算 PK、老叟戏顽童、泥肘等核心话题，以及开学季、泛教育行业、泛 AI 行业等扩展话题。共抓取 <strong>101</strong> 条 B站视频（总播放 <strong>13132.0万</strong>）、<strong>100</strong> 条抖音视频、<strong>91</strong> 条小红书笔记、<strong>38</strong> 条微博帖子。热门爆点集中在「老叟戏顽童」恶搞、大学生炸鱼小学生反差、棋魂混剪等方向，B站 TOP1《《顽童戏老叟》》播放 <strong>1406.4万</strong>，抖音 TOP1《这棋分明是老叟戏顽童！ #棋魂 #棋手战鹰》点赞 <strong>174.7万</strong>。
+  </div>
+</div>
+
+<!-- 二、猿辅导系爆点总览 -->
+<div class="section">
+  <h2 id="section-overview">二、爆点总览</h2>
+
+  <h3 id="section-catalog">2.1 产品监控清单</h3>
+  <div class="table-wrapper">
+  <table>
+    <thead><tr><th>产品</th><th>监控平台</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>小猿口算</strong></td>
+        <td><span class="tag tag-bilibili">B站</span><span class="tag tag-douyin">抖音</span><span class="tag tag-xiaohongshu">小红书</span><span class="tag tag-weibo">微博</span></td>
+      </tr>
+      <tr>
+        <td><strong>口算 PK</strong></td>
+        <td><span class="tag tag-bilibili">B站</span><span class="tag tag-douyin">抖音</span><span class="tag tag-xiaohongshu">小红书</span><span class="tag tag-weibo">微博</span></td>
+      </tr>
+      <tr>
+        <td><strong>小猿口算 PK</strong></td>
+        <td><span class="tag tag-bilibili">B站</span><span class="tag tag-douyin">抖音</span><span class="tag tag-xiaohongshu">小红书</span><span class="tag tag-weibo">微博</span></td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3 id="section-matrix">2.2 分渠道话题矩阵</h3>
+  <div class="table-wrapper">
+  <table>
+    <thead><tr><th>渠道</th><th>话题/关键词</th><th>典型标题/钩子</th><th>数据量级</th></tr></thead>
+    <tbody>
+      <tr><td><span class="tag tag-bilibili">B站</span></td><td>#老叟戏顽童</td><td>「⚡泥 肘⚡」「老叟肘高玩」「不同时代的老叟戏顽童」</td><td>单条 450 万~1340 万播放</td></tr>
+      <tr><td><span class="tag tag-bilibili">B站</span></td><td>#小猿口算</td><td>「演都不带演 挂哥一秒十题」「大学生口算 PK 碾压小学生」</td><td>单条 200 万~285 万播放</td></tr>
+      <tr><td><span class="tag tag-douyin">抖音</span></td><td>#小猿口算 #老叟戏顽童</td><td>「神之一手：天道镇压」「柯洁炸鱼名场面」</td><td>抖音 ❤15.6万</td></tr>
+      <tr><td><span class="tag tag-xiaohongshu">小红书</span></td><td>#小猿口算 #炸鱼</td><td>「炸鱼遇炸鱼孰强孰弱」「去小猿口算和小孩子 pk 什么心理」</td><td>小红书 ❤140</td></tr>
+      <tr><td><span class="tag tag-weibo">微博</span></td><td>#小猿口算# #老叟戏顽童#</td><td>「小猿口算官方啥意思」「匹配机制紧急升级」</td><td>微博互动较低</td></tr>
+    </tbody>
+  </table>
+  </div>
+  </div>
+
+  <h3 id="section-data">2.3 数据表现</h3>
+  <ul>
+    <li>B站监控到 <strong>101</strong> 条视频，总播放量 <strong>13132.0万</strong></li>
+    <li>抖音监控到 <strong>100</strong> 条视频，TOP1 点赞 <strong>174.7万</strong></li>
+    <li>小红书监控到 <strong>91</strong> 条笔记，TOP1 点赞 <strong>3.6万</strong></li>
+    <li>微博监控到 <strong>38</strong> 条帖子，整体互动量较低，讨论热度集中在B站/抖音</li>
+  </ul>
+</div>
+
+<!-- 二-B、分渠道热帖 TOP 榜 -->
+<div class="section">
+  <h2>二-B、分渠道热帖 TOP 榜</h2>
+
+  <h3 id="section-bilibili">B站 TOP10 热门视频</h3>
+  <div class="table-wrapper">
+  <table>
+    <thead><tr><th>#</th><th>标题</th><th>话题</th><th>UP主</th><th>播放</th><th>点赞</th><th>收藏</th><th>分享</th><th>弹幕</th><th>粉丝</th><th>发布时间</th><th>链接</th></thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td title="《顽童戏老叟》">《顽童戏老叟》</td>
+        <td><span style="color:#94a3b8">-</span></td>
+        <td>@伤心欲茄222</td>
+        <td>1406.4万</td>
+        <td>89.3万</td>
+        <td>6.9万</td>
+        <td>1.5万</td>
+        <td>3.8k</td>
+        <td>438.2万</td>
+        <td>08-12</td>
+        <td><a href="https://www.bilibili.com/video/BV1EAuk6CEfw" target="_blank">查看</a></td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td title="⚡泥 肘⚡">⚡泥 肘⚡</td>
+        <td><span style="color:#94a3b8">-</span></td>
+        <td>@污污云</td>
+        <td>844.5万</td>
+        <td>46.5万</td>
+        <td>12.2万</td>
+        <td>6.5万</td>
+        <td>4.7万</td>
+        <td>40.3万</td>
+        <td>08-10</td>
+        <td><a href="https://www.bilibili.com/video/BV1TiuZ6TEQw" target="_blank">查看</a></td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td title="⚡️老 叟 肘 高 玩⚡️">⚡️老 叟 肘 高 玩⚡️</td>
+        <td><span style="color:#94a3b8">-</span></td>
+        <td>@酸奶煎个蛋</td>
+        <td>540.6万</td>
+        <td>28.0万</td>
+        <td>5.0万</td>
+        <td>3.6万</td>
+        <td>6.4k</td>
+        <td>30.3万</td>
+        <td>08-15</td>
+        <td><a href="https://www.bilibili.com/video/BV116gu6AEiw" target="_blank">查看</a></td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td title="⚡️你 上 你 也 肘⚡️">⚡️你 上 你 也 肘⚡️</td>
+        <td><span style="color:#94a3b8">-</span></td>
+        <td>@酸奶煎个蛋</td>
+        <td>509.8万</td>
+        <td>27.1万</td>
+        <td>4.8万</td>
+        <td>2.5万</td>
+        <td>6.8k</td>
+        <td>30.3万</td>
+        <td>08-13</td>
+        <td><a href="https://www.bilibili.com/video/BV1QAg768EMb" target="_blank">查看</a></td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td title="泥肘！！">泥肘！！</td>
+        <td><span style="color:#94a3b8">-</span></td>
+        <td>@小A大帅比</td>
+        <td>423.9万</td>
+        <td>19.4万</td>
+        <td>4.5万</td>
+        <td>1.9万</td>
+        <td>2.5k</td>
+        <td>7.0万</td>
+        <td>07-29</td>
+        <td><a href="https://www.bilibili.com/video/BV19d3n6yEti" target="_blank">查看</a></td>
+      </tr>
+      <tr>
+        <td>6</td>
+        <td title="不同时代的老叟戏顽童。">不同时代的老叟戏顽童。</td>
+        <td><span style="color:#94a3b8">-</span></td>
+        <td>@小猪要吃好果子</td>
+        <td>299.2万</td>
+        <td>15.7万</td>
+        <td>2.4万</td>
+        <td>1.1万</td>
+        <td>910</td>
+        <td>19.0万</td>
+        <td>08-16</td>
+        <td><a href="https://www.bilibili.com/video/BV1UrbQ6TERG" target="_blank">查看</a></td>
+      </tr>
+      <tr>
+        <td>7</td>
+        <td title="演都不带演 挂哥一秒十题">演都不带演 挂哥一秒十题</td>
+        <td><span style="color:#94a3b8">-</span></td>
+        <td>@水滴H2O</td>
+        <td>288.4万</td>
+        <td>19.8万</td>
+        <td>2.1万</td>
+        <td>1.3万</td>
+        <td>1.5k</td>
+        <td>1.2k</td>
+        <td>2024-10-10</td>
+        <td><a href="https://www.bilibili.com/video/BV1qF2gY2Ebu" target="_blank">查看</a></td>
+      </tr>
+      <tr>
+        <td>8</td>
+        <td title="就 你 有 老 叟 啊?！">就 你 有 老 叟 啊?！</td>
+        <td><span style="color:#94a3b8">-</span></td>
+        <td>@茶咩cc</td>
+        <td>286.1万</td>
+        <td>8.0万</td>
+        <td>1.4万</td>
+        <td>5.2k</td>
+        <td>735</td>
+        <td>71.1万</td>
+        <td>08-16</td>
+        <td><a href="https://www.bilibili.com/video/BV1KAbS6xESC" target="_blank">查看</a></td>
+      </tr>
+      <tr>
+        <td>9</td>
+        <td title="高手对决！口算pk匹配到高手了">高手对决！口算pk匹配到高手了</td>
+        <td><span style="color:#94a3b8">-</span></td>
+        <td>@黄老虎大魔术师</td>
+        <td>280.2万</td>
+        <td>21.3万</td>
+        <td>1.8万</td>
+        <td>1.6万</td>
+        <td>466</td>
+        <td>1.1万</td>
+        <td>2024-10-10</td>
+        <td><a href="https://www.bilibili.com/video/BV1G725YDENh" target="_blank">查看</a></td>
+      </tr>
+      <tr>
+        <td>10</td>
+        <td title="这个字确实难写 难为你了老弟哈哈哈哈哈哈">这个字确实难写 难为你了老弟哈哈哈哈哈哈</td>
+        <td><span style="color:#94a3b8">-</span></td>
+        <td>@J-Five_</td>
+        <td>280.1万</td>
+        <td>5.9万</td>
+        <td>1.5k</td>
+        <td>89</td>
+        <td>153</td>
+        <td>23.4万</td>
+        <td>2024-10-12</td>
+        <td><a href="https://www.bilibili.com/video/BV1wy2tY6EVi" target="_blank">查看</a></td>
+      </tr></tbody>
+  </table>
+  </div>
+
+  <h3 id="section-douyin">抖音 TOP10 热门视频</h3>
+  <div class="table-wrapper">
+  <table>
+    <thead><tr><th>#</th><th>标题</th><th>话题</th><th>作者</th><th>点赞</th><th>评论</th><th>分享</th><th>粉丝</th><th>发布时间</th><th>链接</th></thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td title="这棋分明是老叟戏顽童！ #棋魂 #棋手战鹰">这棋分明是老叟戏顽童！ #棋魂 #棋手战鹰</td>
+        <td><span class="tag tag-topic">#棋魂</span> <span class="tag tag-topic">#棋手战鹰</span></td>
+        <td>@棋手战鹰</td>
+        <td>174.7万</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>-</td>
+        <td><a href="https://www.douyin.com/video/7674985285629473151" target="_blank">查看</a></td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td title="泥肘！！！#青年创作者成长计划 #配音 #配音王子 @c尊">泥肘！！！#青年创作者成长计划 #配音 #配音王子 @c尊</td>
+        <td><span class="tag tag-topic">#青年创作者成长计划</span> <span class="tag tag-topic">#配音</span> <span class="tag tag-topic">#配音王子</span></td>
+        <td>@cc老师（配音界的王子）</td>
+        <td>54.2万</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>-</td>
+        <td><a href="https://www.douyin.com/video/7669743442478026107" target="_blank">查看</a></td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td title="合集00:3742.7万依旧老叟戏顽童 #棋魂#反转#围棋@Feng4天前">合集00:3742.7万依旧老叟戏顽童 #棋魂#反转#围棋@...</td>
+        <td><span class="tag tag-topic">#棋魂</span> <span class="tag tag-topic">#反转</span> <span class="tag tag-topic">#围棋</span></td>
+        <td>@合集</td>
+        <td>42.7万</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>-</td>
+        <td><a href="https://www.douyin.com/video/7674828409491665061" target="_blank">查看</a></td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td title="合集00:3734.9万依旧老叟戏顽童 #棋魂#反转#围棋@Feng1周前">合集00:3734.9万依旧老叟戏顽童 #棋魂#反转#围棋@...</td>
+        <td><span class="tag tag-topic">#棋魂</span> <span class="tag tag-topic">#反转</span> <span class="tag tag-topic">#围棋</span></td>
+        <td>@合集</td>
+        <td>34.9万</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>-</td>
+        <td><a href="https://www.douyin.com/video/7671432275629081445" target="_blank">查看</a></td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td title="泥肘#围棋 #破大防 #围棋战术 #">泥肘#围棋 #破大防 #围棋战术 #</td>
+        <td><span class="tag tag-topic">#围棋</span> <span class="tag tag-topic">#破大防</span> <span class="tag tag-topic">#围棋战术</span></td>
+        <td>@半颗牙</td>
+        <td>27.9万</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>-</td>
+        <td><a href="https://www.douyin.com/video/7674117100743015018" target="_blank">查看</a></td>
+      </tr>
+      <tr>
+        <td>6</td>
+        <td title="泥 肘 😭👉#围棋 #棋魂">泥 肘 😭👉#围棋 #棋魂</td>
+        <td><span class="tag tag-topic">#围棋</span> <span class="tag tag-topic">#棋魂</span></td>
+        <td>@天冷冷</td>
+        <td>25.8万</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>-</td>
+        <td><a href="https://www.douyin.com/video/7674221815317960177" target="_blank">查看</a></td>
+      </tr>
+      <tr>
+        <td>7</td>
+        <td title="⚡老叟戏顽童⚡ #老叟戏顽童 #棋魂 #鬼畜">⚡老叟戏顽童⚡ #老叟戏顽童 #棋魂 #鬼畜</td>
+        <td><span class="tag tag-topic">#老叟戏顽童</span> <span class="tag tag-topic">#棋魂</span> <span class="tag tag-topic">#鬼畜</span></td>
+        <td>@不抽象的真菌零_Jack</td>
+        <td>25.1万</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>-</td>
+        <td><a href="https://www.douyin.com/video/7674228451750022443" target="_blank">查看</a></td>
+      </tr>
+      <tr>
+        <td>8</td>
+        <td title="你不炸  我不炸  鱼儿何时能长大#老叟戏顽童 #褚嬴 #神之一手 #小猿搜题">你不炸  我不炸  鱼儿何时能长大#老叟戏顽童 #褚嬴 #神...</td>
+        <td><span class="tag tag-topic">#老叟戏顽童</span> <span class="tag tag-topic">#褚嬴</span> <span class="tag tag-topic">#神之一手</span></td>
+        <td>@</td>
+        <td>19.7万</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>-</td>
+        <td><a href="https://www.douyin.com/video/7675477714682064202" target="_blank">查看</a></td>
+      </tr>
+      <tr>
+        <td>9</td>
+        <td title="#老叟戏顽童 我就炸鱼你气不气🤣👉🏻">#老叟戏顽童 我就炸鱼你气不气🤣👉🏻</td>
+        <td><span class="tag tag-topic">#老叟戏顽童</span></td>
+        <td>@也许會回头</td>
+        <td>18.5万</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>-</td>
+        <td><a href="https://www.douyin.com/video/7674842042174256869" target="_blank">查看</a></td>
+      </tr>
+      <tr>
+        <td>10</td>
+        <td title="时间会证明#小猿口算#褚嬴">时间会证明#小猿口算#褚嬴</td>
+        <td><span class="tag tag-topic">#小猿口算</span> <span class="tag tag-topic">#褚嬴</span></td>
+        <td>@lies</td>
+        <td>18.0万</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>-</td>
+        <td><a href="https://www.douyin.com/video/7675575591990778982" target="_blank">查看</a></td>
+      </tr></tbody>
+  </table>
+  </div>
+
+  <h3 id="section-xiaohongshu">小红书 TOP10 热门笔记</h3>
+  <div class="table-wrapper">
+  <table>
+    <thead><tr><th>#</th><th>标题</th><th>话题</th><th>作者</th><th>点赞</th><th>发布时间</th><th>链接</th></thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td title="老叟戏顽童">老叟戏顽童</td>
+        <td><span style="color:#94a3b8">-</span></td>
+        <td>@王者荣耀の军师</td>
+        <td>3.6万</td>
+        <td>-</td>
+        <td><a href="https://www.xiaohongshu.com/explore/6a7f2a6f000000003301819c" target="_blank">查看</a></td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td title="xxs：一群老鼠洗完头把我毁了">xxs：一群老鼠洗完头把我毁了</td>
+        <td><span style="color:#94a3b8">-</span></td>
+        <td>@小鱼芝士</td>
+        <td>3.4万</td>
+        <td>-</td>
+        <td><a href="https://www.xiaohongshu.com/explore/6a86b2f50000000027030599" target="_blank">查看</a></td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td title="“泥肘”">“泥肘”</td>
+        <td><span style="color:#94a3b8">-</span></td>
+        <td>@冰美式</td>
+        <td>3.1万</td>
+        <td>-</td>
+        <td><a href="https://www.xiaohongshu.com/explore/6a73f3ba0000000008013a86" target="_blank">查看</a></td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td title="泥肘😡😡😡😭😭😭">泥肘😡😡😡😭😭😭</td>
+        <td><span style="color:#94a3b8">-</span></td>
+        <td>@千禧</td>
+        <td>2.7万</td>
+        <td>-</td>
+        <td><a href="https://www.xiaohongshu.com/explore/6a8195fe0000000026036543" target="_blank">查看</a></td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td title="">(图文笔记)</td>
+        <td><span style="color:#94a3b8">-</span></td>
+        <td>@皮皮吃瓜集</td>
+        <td>1.6万</td>
+        <td>-</td>
+        <td><a href="https://www.xiaohongshu.com/explore/6a86b6b3000000002500684b" target="_blank">查看</a></td>
+      </tr>
+      <tr>
+        <td>6</td>
+        <td title="">(图文笔记)</td>
+        <td><span style="color:#94a3b8">-</span></td>
+        <td>@霍格沃兹在逃海德薇</td>
+        <td>1.1万</td>
+        <td>-</td>
+        <td><a href="https://www.xiaohongshu.com/explore/6a854ada0000000008012ffe" target="_blank">查看</a></td>
+      </tr>
+      <tr>
+        <td>7</td>
+        <td title="老叟戏顽童">老叟戏顽童</td>
+        <td><span style="color:#94a3b8">-</span></td>
+        <td>@苏木</td>
+        <td>1.0万</td>
+        <td>-</td>
+        <td><a href="https://www.xiaohongshu.com/explore/6a83b3f6000000003300c6ab" target="_blank">查看</a></td>
+      </tr>
+      <tr>
+        <td>8</td>
+        <td title="⚡️泥肘⚡️">⚡️泥肘⚡️</td>
+        <td><span style="color:#94a3b8">-</span></td>
+        <td>@阻力(魔丸酸菜)</td>
+        <td>4.8k</td>
+        <td>-</td>
+        <td><a href="https://www.xiaohongshu.com/explore/6a7d89080000000035016ba6" target="_blank">查看</a></td>
+      </tr>
+      <tr>
+        <td>9</td>
+        <td title="小猿口算添加小学生认证？">小猿口算添加小学生认证？</td>
+        <td><span style="color:#94a3b8">-</span></td>
+        <td>@亚比</td>
+        <td>3.5k</td>
+        <td>-</td>
+        <td><a href="https://www.xiaohongshu.com/explore/6708d5a6000000002c028f47" target="_blank">查看</a></td>
+      </tr>
+      <tr>
+        <td>10</td>
+        <td title="⚡褚赢:泥肘⚡">⚡褚赢:泥肘⚡</td>
+        <td><span style="color:#94a3b8">-</span></td>
+        <td>@彼尘岸芥</td>
+        <td>1.5k</td>
+        <td>-</td>
+        <td><a href="https://www.xiaohongshu.com/explore/6a83239e0000000033009803" target="_blank">查看</a></td>
+      </tr></tbody>
+  </table>
+  </div>
+  <div class="note-info">
+    <strong>📱 小红书说明：</strong>小红书 PC 端强制 APP 导流，上表链接需在手机端打开。受 PC 端限制，评论/收藏/转发/粉丝/发布时间数据暂无法获取。
+  </div>
+
+  <h3 id="section-weibo">微博 TOP5 热门帖子</h3>
+  <div class="table-wrapper">
+  <table>
+    <thead><tr><th>#</th><th>内容摘要</th><th>话题</th><th>作者</th><th>❤</th><th>💬</th><th>🔄</th><th>粉丝</th><th>发布时间</th><th>链接</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td title="孩子主动做口算吗，到底那位家长看到能绷住啊 #微博二创视频创作季##一分钟精选视频扶持计划# L漫野初绪的微博视频 ​">孩子主动做口算吗，到底那位家长看到能绷住啊 #微博二创视频创作季##一分钟精选视...</td>
+        <td><span class="tag tag-topic">#微博二创视频创作季</span> <span class="tag tag-topic">#一分钟精选视频扶持计划</span></td>
+        <td>@漫野初绪</td>
+        <td>❤7</td>
+        <td>💬2</td>
+        <td>🔄2</td>
+        <td>3.0万</td>
+        <td>08月20日 17:43</td>
+        <td><a href="https://weibo.com/detail/5334045548610812" target="_blank">查看</a></td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td title="学生大半夜找我小猿口算PK结果手速没比过 ​">学生大半夜找我小猿口算PK结果手速没比过 ​</td>
+        <td><span style="color:#94a3b8">-</span></td>
+        <td>@故时一场雪</td>
+        <td>❤2</td>
+        <td>💬4</td>
+        <td>🔄0</td>
+        <td>1.0k</td>
+        <td>08月20日 23:54</td>
+        <td><a href="https://weibo.com/detail/5334138808960309" target="_blank">查看</a></td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td title="感觉大家都有点赢压抑了 看个烂片要上升搞死电影圈 看见别人有钱有闲追星要大热天出去聚众起哄霸凌别人 甚至还有去小猿口算虐小学生的不看点别人的笑话是不行的 好吧我也是 想到21年没冲动买房少亏当赚也是美滋滋上了 ​">感觉大家都有点赢压抑了 看个烂片要上升搞死电影圈 看见别人有钱有闲追星要大热天出...</td>
+        <td><span style="color:#94a3b8">-</span></td>
+        <td>@河里逮猫</td>
+        <td>❤2</td>
+        <td>💬1</td>
+        <td>🔄0</td>
+        <td>153</td>
+        <td>08月20日 23:50</td>
+        <td><a href="https://weibo.com/detail/5334137901941592" target="_blank">查看</a></td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td title="这分明就是老叟戏老叟VS小学生口算PK 依旧炸鱼#一分钟精选视频扶持计划##微博二创视频创作季# L娱颜儿的微博视频 ​">这分明就是老叟戏老叟VS小学生口算PK 依旧炸鱼#一分钟精选视频扶持计划##微博...</td>
+        <td><span class="tag tag-topic">#一分钟精选视频扶持计划</span> <span class="tag tag-topic">#微博二创视频创作季</span></td>
+        <td>@娱颜儿</td>
+        <td>❤2</td>
+        <td>💬1</td>
+        <td>🔄0</td>
+        <td>4.1万</td>
+        <td>08月20日 15:32</td>
+        <td><a href="https://weibo.com/detail/5334012642984331" target="_blank">查看</a></td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td title="3964不喜欢那种披着乐子人皮到处去超话串，吸引mmr评论又很得意的人，幻视之前在口算平台故意找小孩子PK的清澈大学生了 ​">3964不喜欢那种披着乐子人皮到处去超话串，吸引mmr评论又很得意的人，幻视之前...</td>
+        <td><span style="color:#94a3b8">-</span></td>
+        <td>@没人理解一下我吗</td>
+        <td>❤3</td>
+        <td>💬0</td>
+        <td>🔄0</td>
+        <td>2.0万</td>
+        <td>08月02日 07:33</td>
+        <td><a href="https://weibo.com/detail/5327368907653172" target="_blank">查看</a></td>
+      </tr></tbody>
+  </table>
+  </div>
+  <div class="note">
+    <strong>⚠️ 微博热度说明：</strong>微博侧整体互动量较低，讨论热度集中在 B站/抖音。上表按互动量（点赞+评论+转发）降序排列。
+  </div>
+</div>
+
+
+<!-- 二-C、跨平台博主维度汇总 -->
+<div class="section">
+  <h2 id="section-blogger">2.8 博主维度汇总（TOP 30 按粉丝量降序）</h2>
+  <div class="table-wrapper">
+  <table>
+    <thead><tr><th>#</th><th>博主</th><th>粉丝量</th><th>涉及平台</th><th>相关帖子数</th></tr></thead>
+    <tbody><tr>
+      <td>1</td>
+      <td>@梗指南</td>
+      <td>486.8万</td>
+      <td><span class="tag tag-bilibili">B站</span></td>
+      <td>1</td>
+    </tr><tr>
+      <td>2</td>
+      <td>@伤心欲茄222</td>
+      <td>438.2万</td>
+      <td><span class="tag tag-bilibili">B站</span></td>
+      <td>1</td>
+    </tr><tr>
+      <td>3</td>
+      <td>@梗百科</td>
+      <td>237.3万</td>
+      <td><span class="tag tag-bilibili">B站</span></td>
+      <td>1</td>
+    </tr><tr>
+      <td>4</td>
+      <td>@环球时报</td>
+      <td>209.5万</td>
+      <td><span class="tag tag-bilibili">B站</span></td>
+      <td>1</td>
+    </tr><tr>
+      <td>5</td>
+      <td>@嘉然今天吃什么</td>
+      <td>186.8万</td>
+      <td><span class="tag tag-bilibili">B站</span></td>
+      <td>1</td>
+    </tr><tr>
+      <td>6</td>
+      <td>@小龙同学和赵老师</td>
+      <td>175.5万</td>
+      <td><span class="tag tag-bilibili">B站</span></td>
+      <td>1</td>
+    </tr><tr>
+      <td>7</td>
+      <td>@千诗百寒</td>
+      <td>117.8万</td>
+      <td><span class="tag tag-bilibili">B站</span></td>
+      <td>1</td>
+    </tr><tr>
+      <td>8</td>
+      <td>@四川观察</td>
+      <td>107.5万</td>
+      <td><span class="tag tag-bilibili">B站</span></td>
+      <td>2</td>
+    </tr><tr>
+      <td>9</td>
+      <td>@小猿AI（原小猿口算）</td>
+      <td>104.4万</td>
+      <td><span class="tag tag-douyin">抖音</span></td>
+      <td>9</td>
+    </tr><tr>
+      <td>10</td>
+      <td>@游戏达baka</td>
+      <td>103.4万</td>
+      <td><span class="tag tag-bilibili">B站</span></td>
+      <td>1</td>
+    </tr><tr>
+      <td>11</td>
+      <td>@程序员鱼皮</td>
+      <td>99.6万</td>
+      <td><span class="tag tag-bilibili">B站</span></td>
+      <td>1</td>
+    </tr><tr>
+      <td>12</td>
+      <td>@哈娜hanna</td>
+      <td>87.6万</td>
+      <td><span class="tag tag-bilibili">B站</span></td>
+      <td>1</td>
+    </tr><tr>
+      <td>13</td>
+      <td>@茶咩cc</td>
+      <td>71.1万</td>
+      <td><span class="tag tag-bilibili">B站</span></td>
+      <td>1</td>
+    </tr><tr>
+      <td>14</td>
+      <td>@陈泽工作室幻梦</td>
+      <td>55.1万</td>
+      <td><span class="tag tag-bilibili">B站</span></td>
+      <td>1</td>
+    </tr><tr>
+      <td>15</td>
+      <td>@GTI火箭兵鲁鲁鸟</td>
+      <td>49.4万</td>
+      <td><span class="tag tag-bilibili">B站</span></td>
+      <td>1</td>
+    </tr><tr>
+      <td>16</td>
+      <td>@因你而在的梦</td>
+      <td>42.1万</td>
+      <td><span class="tag tag-bilibili">B站</span></td>
+      <td>1</td>
+    </tr><tr>
+      <td>17</td>
+      <td>@污污云</td>
+      <td>40.3万</td>
+      <td><span class="tag tag-bilibili">B站</span></td>
+      <td>2</td>
+    </tr><tr>
+      <td>18</td>
+      <td>@b站南瓜酱</td>
+      <td>37.7万</td>
+      <td><span class="tag tag-bilibili">B站</span></td>
+      <td>1</td>
+    </tr><tr>
+      <td>19</td>
+      <td>@罐头鉴赏家</td>
+      <td>33.7万</td>
+      <td><span class="tag tag-bilibili">B站</span></td>
+      <td>1</td>
+    </tr><tr>
+      <td>20</td>
+      <td>@大包二妹的幸福生活</td>
+      <td>33.5万</td>
+      <td><span class="tag tag-bilibili">B站</span></td>
+      <td>1</td>
+    </tr><tr>
+      <td>21</td>
+      <td>@酸奶煎个蛋</td>
+      <td>30.3万</td>
+      <td><span class="tag tag-bilibili">B站</span></td>
+      <td>3</td>
+    </tr><tr>
+      <td>22</td>
+      <td>@喵星考拉</td>
+      <td>27.0万</td>
+      <td><span class="tag tag-bilibili">B站</span></td>
+      <td>1</td>
+    </tr><tr>
+      <td>23</td>
+      <td>@不抽象的真菌零_Jack</td>
+      <td>24.1万</td>
+      <td><span class="tag tag-bilibili">B站</span> <span class="tag tag-douyin">抖音</span></td>
+      <td>2</td>
+    </tr><tr>
+      <td>24</td>
+      <td>@J-Five_</td>
+      <td>23.4万</td>
+      <td><span class="tag tag-bilibili">B站</span></td>
+      <td>1</td>
+    </tr><tr>
+      <td>25</td>
+      <td>@天天吃八碗</td>
+      <td>23.3万</td>
+      <td><span class="tag tag-bilibili">B站</span></td>
+      <td>1</td>
+    </tr><tr>
+      <td>26</td>
+      <td>@武连压重开版</td>
+      <td>23.0万</td>
+      <td><span class="tag tag-bilibili">B站</span></td>
+      <td>1</td>
+    </tr><tr>
+      <td>27</td>
+      <td>@蛋某人排名</td>
+      <td>21.1万</td>
+      <td><span class="tag tag-bilibili">B站</span></td>
+      <td>1</td>
+    </tr><tr>
+      <td>28</td>
+      <td>@cblgffshyh</td>
+      <td>19.1万</td>
+      <td><span class="tag tag-weibo">微博</span></td>
+      <td>1</td>
+    </tr><tr>
+      <td>29</td>
+      <td>@小猪要吃好果子</td>
+      <td>19.0万</td>
+      <td><span class="tag tag-bilibili">B站</span></td>
+      <td>2</td>
+    </tr><tr>
+      <td>30</td>
+      <td>@集大成者_</td>
+      <td>18.2万</td>
+      <td><span class="tag tag-bilibili">B站</span></td>
+      <td>1</td>
+    </tr></tbody>
+  </table>
+  </div>
+  <div class="note-info">
+    <strong> 说明：</strong>按博主名称聚合四平台数据，粉丝量取各平台最大值，帖子数为该博主在所有平台的出现次数。仅展示有粉丝数据的博主（B站/微博），抖音/小红书粉丝数据暂缺。
+  </div>
+</div>
+
+<!-- 二-D、数据动态变化 -->
+<div class="section">
+  <h2 id="section-trend">2.9 数据动态变化（与上一轮对比 TOP 20）</h2>
+  
+  <div class="table-wrapper">
+  <table>
+    <thead><tr><th>#</th><th>平台</th><th>标题</th><th>作者</th><th>播放</th><th>点赞</th><th>收藏</th><th>评论/弹幕</th><th>分享</th><th>链接</th></tr></thead>
+    <tbody><tr>
+          <td>1</td>
+          <td><span class="tag tag-bilibili">B站</span></td>
+          <td title="慈 父 见 背">慈 父 见 背</td>
+          <td>@绿化锂</td>
+          <td style="color: #16a34a; font-weight: 600;">+8.5万</td><td style="color: #16a34a; font-weight: 600;">+7.2k</td><td style="color: #16a34a; font-weight: 600;">+1.2k</td><td style="color: #16a34a; font-weight: 600;">+607</td><td style="color: #16a34a; font-weight: 600;">+76</td>
+          <td><a href="https://www.bilibili.com/video/BV1Ao8j6PEhw" target="_blank">查看</a></td>
+        </tr><tr>
+          <td>2</td>
+          <td><span class="tag tag-bilibili">B站</span></td>
+          <td title="可惜了老弟，这把老叟戏顽童，泥肘啊！！！！！！褚赢，时光，小猿搜题，一花一叶一菩提。">可惜了老弟，这把老叟戏顽童，泥肘啊！！！！！！褚赢，时光，小猿搜题，一...</td>
+          <td>@师徒脑洞小说录</td>
+          <td style="color: #16a34a; font-weight: 600;">+8.8万</td><td style="color: #16a34a; font-weight: 600;">+4.7k</td><td style="color: #16a34a; font-weight: 600;">+335</td><td style="color: #16a34a; font-weight: 600;">+259</td><td style="color: #16a34a; font-weight: 600;">+16</td>
+          <td><a href="https://www.bilibili.com/video/BV1om8L6nERo" target="_blank">查看</a></td>
+        </tr><tr>
+          <td>3</td>
+          <td><span class="tag tag-bilibili">B站</span></td>
+          <td title="倒 反 天 罡">倒 反 天 罡</td>
+          <td>@绿化锂</td>
+          <td style="color: #16a34a; font-weight: 600;">+7.8万</td><td style="color: #16a34a; font-weight: 600;">+3.5k</td><td style="color: #16a34a; font-weight: 600;">+415</td><td style="color: #16a34a; font-weight: 600;">+167</td><td style="color: #16a34a; font-weight: 600;">+23</td>
+          <td><a href="https://www.bilibili.com/video/BV1wxbv65ETC" target="_blank">查看</a></td>
+        </tr><tr>
+          <td>4</td>
+          <td><span class="tag tag-bilibili">B站</span></td>
+          <td title="⚡️老 叟 肘 高 玩⚡️">⚡️老 叟 肘 高 玩⚡️</td>
+          <td>@酸奶煎个蛋</td>
+          <td style="color: #16a34a; font-weight: 600;">+7.4万</td><td style="color: #16a34a; font-weight: 600;">+2.9k</td><td style="color: #16a34a; font-weight: 600;">+641</td><td style="color: #16a34a; font-weight: 600;">+477</td><td style="color: #16a34a; font-weight: 600;">+199</td>
+          <td><a href="https://www.bilibili.com/video/BV116gu6AEiw" target="_blank">查看</a></td>
+        </tr><tr>
+          <td>5</td>
+          <td><span class="tag tag-bilibili">B站</span></td>
+          <td title="《顽童戏老叟》">《顽童戏老叟》</td>
+          <td>@伤心欲茄222</td>
+          <td style="color: #16a34a; font-weight: 600;">+7.0万</td><td style="color: #16a34a; font-weight: 600;">+3.1k</td><td style="color: #16a34a; font-weight: 600;">+260</td><td style="color: #16a34a; font-weight: 600;">+81</td><td style="color: #16a34a; font-weight: 600;">+12</td>
+          <td><a href="https://www.bilibili.com/video/BV1EAuk6CEfw" target="_blank">查看</a></td>
+        </tr><tr>
+          <td>6</td>
+          <td><span class="tag tag-bilibili">B站</span></td>
+          <td title="就 你 有 老 叟 啊?！">就 你 有 老 叟 啊?！</td>
+          <td>@茶咩cc</td>
+          <td style="color: #16a34a; font-weight: 600;">+7.0万</td><td style="color: #16a34a; font-weight: 600;">+1.4k</td><td style="color: #16a34a; font-weight: 600;">+229</td><td style="color: #16a34a; font-weight: 600;">+114</td><td style="color: #16a34a; font-weight: 600;">+9</td>
+          <td><a href="https://www.bilibili.com/video/BV1KAbS6xESC" target="_blank">查看</a></td>
+        </tr><tr>
+          <td>7</td>
+          <td><span class="tag tag-bilibili">B站</span></td>
+          <td title="⚡泥 肘⚡">⚡泥 肘⚡</td>
+          <td>@污污云</td>
+          <td style="color: #16a34a; font-weight: 600;">+5.0万</td><td style="color: #16a34a; font-weight: 600;">+2.0k</td><td style="color: #16a34a; font-weight: 600;">+741</td><td style="color: #16a34a; font-weight: 600;">+287</td><td style="color: #16a34a; font-weight: 600;">+1.0k</td>
+          <td><a href="https://www.bilibili.com/video/BV1TiuZ6TEQw" target="_blank">查看</a></td>
+        </tr><tr>
+          <td>8</td>
+          <td><span class="tag tag-bilibili">B站</span></td>
+          <td title="不同时代的老叟戏顽童。">不同时代的老叟戏顽童。</td>
+          <td>@小猪要吃好果子</td>
+          <td style="color: #16a34a; font-weight: 600;">+4.2万</td><td style="color: #16a34a; font-weight: 600;">+1.5k</td><td style="color: #16a34a; font-weight: 600;">+267</td><td style="color: #16a34a; font-weight: 600;">+125</td><td style="color: #16a34a; font-weight: 600;">+5</td>
+          <td><a href="https://www.bilibili.com/video/BV1UrbQ6TERG" target="_blank">查看</a></td>
+        </tr><tr>
+          <td>9</td>
+          <td><span class="tag tag-bilibili">B站</span></td>
+          <td title="⚡️高 玩 戏 老 叟⚡️">⚡️高 玩 戏 老 叟⚡️</td>
+          <td>@酸奶煎个蛋</td>
+          <td style="color: #16a34a; font-weight: 600;">+4.0万</td><td style="color: #16a34a; font-weight: 600;">+2.6k</td><td style="color: #16a34a; font-weight: 600;">+303</td><td style="color: #16a34a; font-weight: 600;">+169</td><td style="color: #16a34a; font-weight: 600;">+66</td>
+          <td><a href="https://www.bilibili.com/video/BV1n1be6rEw2" target="_blank">查看</a></td>
+        </tr><tr>
+          <td>10</td>
+          <td><span class="tag tag-bilibili">B站</span></td>
+          <td title="⚡泥 肘 肘 肘 肘⚡">⚡泥 肘 肘 肘 肘⚡</td>
+          <td>@天天吃八碗</td>
+          <td style="color: #16a34a; font-weight: 600;">+3.9万</td><td style="color: #16a34a; font-weight: 600;">+1.9k</td><td style="color: #16a34a; font-weight: 600;">+355</td><td style="color: #16a34a; font-weight: 600;">+129</td><td style="color: #16a34a; font-weight: 600;">+24</td>
+          <td><a href="https://www.bilibili.com/video/BV1s1g36qEp4" target="_blank">查看</a></td>
+        </tr><tr>
+          <td>11</td>
+          <td><span class="tag tag-douyin">抖音</span></td>
+          <td title="小学生靠山出现，大学生疑似失去所有力气和手段 #大学生VS小学生口算PK#口算PK#依旧炸鱼">小学生靠山出现，大学生疑似失去所有力气和手段 #大学生VS小学生口算P...</td>
+          <td>@闲娱打工人</td>
+          <td style="color: #16a34a; font-weight: 600;">+3.8万</td><td colspan="4" style="color: #94a3b8;">-</td>
+          <td><a href="https://www.douyin.com/video/7676002892595154210" target="_blank">查看</a></td>
+        </tr><tr>
+          <td>12</td>
+          <td><span class="tag tag-bilibili">B站</span></td>
+          <td title="从夯到拉锐评八月爆火全网梗曲">从夯到拉锐评八月爆火全网梗曲</td>
+          <td>@苹明</td>
+          <td style="color: #16a34a; font-weight: 600;">+3.4万</td><td style="color: #16a34a; font-weight: 600;">+276</td><td style="color: #16a34a; font-weight: 600;">+349</td><td style="color: #16a34a; font-weight: 600;">+1</td><td colspan="1" style="color: #94a3b8;">-</td>
+          <td><a href="https://www.bilibili.com/video/BV1BzuL6PEGg" target="_blank">查看</a></td>
+        </tr><tr>
+          <td>13</td>
+          <td><span class="tag tag-douyin">抖音</span></td>
+          <td title="我就炸鱼你气不气#小猿口算#高等数学#老叟戏顽童">我就炸鱼你气不气#小猿口算#高等数学#老叟戏顽童</td>
+          <td>@下次带束花.</td>
+          <td style="color: #16a34a; font-weight: 600;">+3.1万</td><td colspan="4" style="color: #94a3b8;">-</td>
+          <td><a href="https://www.douyin.com/video/7675566479337364115" target="_blank">查看</a></td>
+        </tr><tr>
+          <td>14</td>
+          <td><span class="tag tag-douyin">抖音</span></td>
+          <td title="撞车褚嬴 进军小猿口算 我不炸鱼你们看什么？ #棋魂 #褚赢 #小猿口算 #池夕">撞车褚嬴 进军小猿口算 我不炸鱼你们看什么？ #棋魂 #褚赢 #小猿口...</td>
+          <td>@池夕（国一褚嬴）</td>
+          <td style="color: #16a34a; font-weight: 600;">+2.8万</td><td colspan="4" style="color: #94a3b8;">-</td>
+          <td><a href="https://www.douyin.com/video/7675705559996078309" target="_blank">查看</a></td>
+        </tr><tr>
+          <td>15</td>
+          <td><span class="tag tag-douyin">抖音</span></td>
+          <td title="神之一手都安排上了，这口算PK是要打职业吗？#大学生VS小学生口算pk#口算PK#小猿AI#小猿AI口算PK">神之一手都安排上了，这口算PK是要打职业吗？#大学生VS小学生口算pk...</td>
+          <td>@知名观众张小碗</td>
+          <td style="color: #16a34a; font-weight: 600;">+2.8万</td><td colspan="4" style="color: #94a3b8;">-</td>
+          <td><a href="https://www.douyin.com/video/7676031454505094446" target="_blank">查看</a></td>
+        </tr><tr>
+          <td>16</td>
+          <td><span class="tag tag-bilibili">B站</span></td>
+          <td title="⚡老 叟 爱 炸 鱼⚡">⚡老 叟 爱 炸 鱼⚡</td>
+          <td>@不拉花奶茶</td>
+          <td style="color: #16a34a; font-weight: 600;">+1.7万</td><td style="color: #16a34a; font-weight: 600;">+535</td><td style="color: #16a34a; font-weight: 600;">+206</td><td style="color: #16a34a; font-weight: 600;">+51</td><td style="color: #16a34a; font-weight: 600;">+5</td>
+          <td><a href="https://www.bilibili.com/video/BV1TvgE6tEg8" target="_blank">查看</a></td>
+        </tr><tr>
+          <td>17</td>
+          <td><span class="tag tag-bilibili">B站</span></td>
+          <td title="⚡️你 上 你 也 肘⚡️">⚡️你 上 你 也 肘⚡️</td>
+          <td>@酸奶煎个蛋</td>
+          <td style="color: #16a34a; font-weight: 600;">+1.6万</td><td style="color: #16a34a; font-weight: 600;">+529</td><td style="color: #16a34a; font-weight: 600;">+133</td><td style="color: #16a34a; font-weight: 600;">+50</td><td style="color: #16a34a; font-weight: 600;">+42</td>
+          <td><a href="https://www.bilibili.com/video/BV1QAg768EMb" target="_blank">查看</a></td>
+        </tr><tr>
+          <td>18</td>
+          <td><span class="tag tag-bilibili">B站</span></td>
+          <td title="这分明就是，顽童洗老叟">这分明就是，顽童洗老叟</td>
+          <td>@小鸟游呆毛</td>
+          <td style="color: #16a34a; font-weight: 600;">+1.3万</td><td style="color: #16a34a; font-weight: 600;">+690</td><td style="color: #16a34a; font-weight: 600;">+116</td><td style="color: #16a34a; font-weight: 600;">+34</td><td style="color: #16a34a; font-weight: 600;">+6</td>
+          <td><a href="https://www.bilibili.com/video/BV1oWg36QEcR" target="_blank">查看</a></td>
+        </tr><tr>
+          <td>19</td>
+          <td><span class="tag tag-bilibili">B站</span></td>
+          <td title="⚡赢则皆大欢喜，输则铠甲合体⚡">⚡赢则皆大欢喜，输则铠甲合体⚡</td>
+          <td>@污污云</td>
+          <td style="color: #16a34a; font-weight: 600;">+1.3万</td><td style="color: #16a34a; font-weight: 600;">+588</td><td style="color: #16a34a; font-weight: 600;">+120</td><td style="color: #16a34a; font-weight: 600;">+30</td><td style="color: #16a34a; font-weight: 600;">+4</td>
+          <td><a href="https://www.bilibili.com/video/BV1qMgN6BEvS" target="_blank">查看</a></td>
+        </tr><tr>
+          <td>20</td>
+          <td><span class="tag tag-bilibili">B站</span></td>
+          <td title="泥肘！！">泥肘！！</td>
+          <td>@小A大帅比</td>
+          <td style="color: #16a34a; font-weight: 600;">+1.3万</td><td style="color: #16a34a; font-weight: 600;">+381</td><td style="color: #16a34a; font-weight: 600;">+103</td><td style="color: #16a34a; font-weight: 600;">+24</td><td style="color: #16a34a; font-weight: 600;">+47</td>
+          <td><a href="https://www.bilibili.com/video/BV19d3n6yEti" target="_blank">查看</a></td>
+        </tr></tbody>
+  </table>
+  </div>
+  <div class="note-info">
+    <strong> 说明：</strong>仅展示有数据变化的帖子。绿色数字表示较上一轮的增长量。B站展示播放/点赞/收藏/弹幕/分享，微博展示点赞/评论/转发，抖音展示点赞/评论/分享，小红书仅展示点赞。
+  </div>
+  
+</div>
+
+<!-- 三、爆点拆解 -->
+<div class="section">
+  <h2 id="section-breakdown">三、爆点拆解（素材创意层）</h2>
+
+  <h3>3.1 四层爆点结构</h3>
+  <div class="table-wrapper">
+  <table>
+    <thead><tr><th>层级</th><th>时间段</th><th>结构描述</th><th>案例</th></tr></thead>
+    <tbody>
+      <tr><td><strong>第一层：钩子层</strong></td><td>前 3 秒</td><td>身份反差 + 悬念标题</td><td>「985 硕士 vs 小学三年级」「⚡泥 肘⚡」</td></tr>
+      <tr><td><strong>第二层：主体层</strong></td><td>10-60 秒</td><td>录屏对战 + 真人反应分屏</td><td>口算 PK 实况 + 表情包/弹幕刷屏</td></tr>
+      <tr><td><strong>第三层：反转层</strong></td><td>最后 10 秒</td><td>结果揭晓 + 情绪爆点</td><td>「大学生被小学生碾压」「挂哥一秒十题」</td></tr>
+      <tr><td><strong>第四层：CTA 层</strong></td><td>结尾</td><td>挑战式提问 + 梗曲循环</td><td>「你敢来挑战吗」「泥肘泥肘泥肘」</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>3.2 六要素拆解</h3>
+  <div class="table-wrapper">
+  <table>
+    <thead><tr><th>要素</th><th>本轮表现</th><th>案例</th></tr></thead>
+    <tbody>
+      <tr><td><strong>反差叙事</strong></td><td>大学生 vs 小学生，「老叟」vs「顽童」</td><td>《顽童戏老叟》1406.4万 播放</td></tr>
+      <tr><td><strong>谐音梗/方言</strong></td><td>「泥肘」（你走）= 方言 + 谐音，易传播</td><td>「⚡泥 肘⚡」4.2 万弹幕</td></tr>
+      <tr><td><strong>UGC 可模仿</strong></td><td>录屏即可创作，门槛低</td><td>TOP15 中 80% 为用户录屏</td></tr>
+      <tr><td><strong>弹幕互动</strong></td><td>梗曲刷屏，用户玩梗</td><td>「泥肘」视频弹幕 4.2 万条</td></tr>
+      <tr><td><strong>名人效应</strong></td><td>柯洁、丁真等名人混剪</td><td>抖音「神之一手」❤1.9万</td></tr>
+      <tr><td><strong>道德争议</strong></td><td>「炸鱼」是否道德，引发讨论</td><td>小红书 ❤140，微博评论数条</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>3.3 文案公式</h3>
+  <div class="formula">
+    <strong>公式 1：</strong><code>身份反差 + 结果反转</code><br>
+    例：「985 硕士挑战小学三年级口算 PK，结果被 7 岁小孩吊打」
+  </div>
+  <div class="formula">
+    <strong>公式 2：</strong><code>谐音梗 + 符号强调</code><br>
+    例：「⚡泥 肘⚡」「⚡老 叟 肘 高 玩⚡️」
+  </div>
+  <div class="formula">
+    <strong>公式 3：</strong><code>名人 + 炸鱼 + 节目效果</code><br>
+    例：「神之一手:天道镇压 #老叟戏顽童 #小猿口算」
+  </div>
+
+  <h3>3.4 评论区情绪</h3>
+  <ul>
+    <li><strong>玩梗型：</strong>「泥肘泥肘泥肘」「大一也是一年级？」</li>
+    <li><strong>自嘲型：</strong>「大学生：我白读了」「@XXX 你行你上」</li>
+    <li><strong>争议型：</strong>「炸鱼小学生的人什么心理？」</li>
+    <li><strong>求战型：</strong>「我要复仇」「练了一周，来战」</li>
+  </ul>
+</div>
+
+<!-- 四、广告素材借鉴 -->
+<div class="section">
+  <h2 id="section-ads">四、广告素材借鉴</h2>
+
+  <div class="rec-card">
+    <h4>建议 1：借势「老叟戏顽童」梗，设计反差对战素材</h4>
+    <p><strong>做法：</strong>在广告素材中植入「老叟 vs 顽童」的反差叙事，让用户产生「我也能玩」的代入感。</p>
+    <p><strong>落地：</strong>「爷爷挑战孙子口算 PK，结果被秒杀」；「老师 vs 学生，谁才是口算王者？」</p>
+  </div>
+
+  <div class="rec-card">
+    <h4>建议 2：利用「泥肘」梗曲，设计洗脑循环素材</h4>
+    <p><strong>做法：</strong>将「泥肘」梗曲作为 BGM，配合口算 PK 录屏，制作 15 秒循环视频。</p>
+    <p><strong>落地：</strong>「泥肘泥肘泥肘 → 口算 PK 录屏 → 结果反转」，利用弹幕刷屏效应。</p>
+  </div>
+
+  <div class="rec-card">
+    <h4>建议 3：鼓励 UGC 录屏，提供「一键生成战报」功能</h4>
+    <p><strong>做法：</strong>在对战结果页增加「生成战报」按钮，自动生成可分享的短视频/海报。</p>
+    <p><strong>落地：</strong>战报包含：对战结果 + 精彩瞬间 + 梗图模板，降低 UGC 门槛。</p>
+  </div>
+
+  <div class="rec-card">
+    <h4>建议 4：建立评论区热词反哺机制</h4>
+    <p><strong>做法：</strong>每周抓取B站/抖音评论区高频词（如「泥肘」「炸鱼」），反哺到下周素材脚本。</p>
+    <p><strong>落地：</strong>把评论区的「梗」直接做成下一条素材的钩子，形成「用户造梗 → 官方玩梗」循环。</p>
+  </div>
+</div>
+
+<!-- 六、评论区 -->
+<div class="section">
+  <h2 id="section-comments">五、评论区（高互动评论 TOP 30）</h2>
+  
+  <div class="table-wrapper">
+  <table>
+    <thead><tr><th>#</th><th>评论内容</th><th>评论者</th><th>❤</th><th>💬</th><th>来源</th><th>来源视频</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>教官半夜2点从床上坐起来：不是，我怎么就被看穿了?!</td>
+        <td>三国百将牌</td>
+        <td>❤2.2万</td>
+        <td>41</td>
+        <td><span class="tag tag-bilibili">B站</span></td>
+        <td title="《顽童戏老叟》">《顽童戏老叟》</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>等以后出小猿微积分
+研一也是一年级，博一也是一年级</td>
+        <td>瓜子瓜子瓜瓜子瓜</td>
+        <td>❤1.9万</td>
+        <td>69</td>
+        <td><span class="tag tag-bilibili">B站</span></td>
+        <td title="演都不带演 挂哥一秒十题">演都不带演 挂哥一秒十题</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>这波还真不能怪祖冲之，他那时候网太差</td>
+        <td>Koenashi</td>
+        <td>❤1.6万</td>
+        <td>51</td>
+        <td><span class="tag tag-bilibili">B站</span></td>
+        <td title="高手对决！口算pk匹配到高手了">高手对决！口算pk匹配到高手了</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>祖冲之：666匹配到博士后了</td>
+        <td>SilverWolf_999</td>
+        <td>❤1.5万</td>
+        <td>25</td>
+        <td><span class="tag tag-bilibili">B站</span></td>
+        <td title="高手对决！口算pk匹配到高手了">高手对决！口算pk匹配到高手了</td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td>围棋×
+拼豆√</td>
+        <td>三国百将牌</td>
+        <td>❤1.2万</td>
+        <td>62</td>
+        <td><span class="tag tag-bilibili">B站</span></td>
+        <td title="⚡泥 肘⚡">⚡泥 肘⚡</td>
+      </tr>
+      <tr>
+        <td>6</td>
+        <td>几百年后的历史老师：这个视频体现了什么？
+学生：体现了历史局限性🤓🖕</td>
+        <td>始皇嬴政Official</td>
+        <td>❤1.2万</td>
+        <td>29</td>
+        <td><span class="tag tag-bilibili">B站</span></td>
+        <td title="高手对决！口算pk匹配到高手了">高手对决！口算pk匹配到高手了</td>
+      </tr>
+      <tr>
+        <td>7</td>
+        <td>这才是真正鼓舞计算机行业的算法大赛，md连夜爬起来研究新算法</td>
+        <td>就这样悄悄的离开</td>
+        <td>❤9.2k</td>
+        <td>38</td>
+        <td><span class="tag tag-bilibili">B站</span></td>
+        <td title="演都不带演 挂哥一秒十题">演都不带演 挂哥一秒十题</td>
+      </tr>
+      <tr>
+        <td>8</td>
+        <td>小学比赛-&amp;gt;大学比赛-&amp;gt;计算机程序设计大赛</td>
+        <td>超可爱萌萌黎鸽子</td>
+        <td>❤9.1k</td>
+        <td>28</td>
+        <td><span class="tag tag-bilibili">B站</span></td>
+        <td title="演都不带演 挂哥一秒十题">演都不带演 挂哥一秒十题</td>
+      </tr>
+      <tr>
+        <td>9</td>
+        <td>这场猜拳结束之后，还有一场酣畅淋漓的嘲笑呢</td>
+        <td>智慧电影了凡四训传家</td>
+        <td>❤7.5k</td>
+        <td>10</td>
+        <td><span class="tag tag-bilibili">B站</span></td>
+        <td title="《顽童戏老叟》">《顽童戏老叟》</td>
+      </tr>
+      <tr>
+        <td>10</td>
+        <td>玩……小猿口算？</td>
+        <td>芋圆柚汁</td>
+        <td>❤6.9k</td>
+        <td>22</td>
+        <td><span class="tag tag-bilibili">B站</span></td>
+        <td title="这个字确实难写 难为你了老弟哈哈哈哈哈哈">这个字确实难写 难为你了老弟哈哈哈哈哈哈</td>
+      </tr>
+      <tr>
+        <td>11</td>
+        <td>教官:她好懂我</td>
+        <td>漾漾秋水</td>
+        <td>❤4.3k</td>
+        <td>14</td>
+        <td><span class="tag tag-bilibili">B站</span></td>
+        <td title="《顽童戏老叟》">《顽童戏老叟》</td>
+      </tr>
+      <tr>
+        <td>12</td>
+        <td>棋圣锐评</td>
+        <td>冷寒-漠</td>
+        <td>❤2.1k</td>
+        <td>14</td>
+        <td><span class="tag tag-bilibili">B站</span></td>
+        <td title="⚡️老 叟 肘 高 玩⚡️">⚡️老 叟 肘 高 玩⚡️</td>
+      </tr>
+      <tr>
+        <td>13</td>
+        <td>95分确实不错了，我大学室友现在是小学班主任，她班有个孩子，4年级数学考了5分[笑哭]她现在人已经麻了</td>
+        <td>断网十三年L</td>
+        <td>❤1.6k</td>
+        <td>30</td>
+        <td><span class="tag tag-bilibili">B站</span></td>
+        <td title="这个字确实难写 难为你了老弟哈哈哈哈哈哈">这个字确实难写 难为你了老弟哈哈哈哈哈哈</td>
+      </tr>
+      <tr>
+        <td>14</td>
+        <td>省流：奖励你和爱因斯坦对线[doge]</td>
+        <td>上島咖啡</td>
+        <td>❤1.4k</td>
+        <td>12</td>
+        <td><span class="tag tag-bilibili">B站</span></td>
+        <td title="这个字确实难写 难为你了老弟哈哈哈哈哈哈">这个字确实难写 难为你了老弟哈哈哈哈哈哈</td>
+      </tr>
+      <tr>
+        <td>15</td>
+        <td>我就炸俞你气不气</td>
+        <td>爱回收严选</td>
+        <td>❤1.1k</td>
+        <td>20</td>
+        <td><span class="tag tag-bilibili">B站</span></td>
+        <td title="⚡泥 肘⚡">⚡泥 肘⚡</td>
+      </tr>
+      <tr>
+        <td>16</td>
+        <td>千年后的柯洁：小光 小光我们去拍抽象视频吧[星星眼][星星眼]</td>
+        <td>理直气壮丶JPG</td>
+        <td>❤1.0k</td>
+        <td>6</td>
+        <td><span class="tag tag-bilibili">B站</span></td>
+        <td title="就 你 有 老 叟 啊?！">就 你 有 老 叟 啊?！</td>
+      </tr>
+      <tr>
+        <td>17</td>
+        <td>这盘棋分明是老嫂子戏男同[笑哭]</td>
+        <td>星环Starring</td>
+        <td>❤777</td>
+        <td>7</td>
+        <td><span class="tag tag-bilibili">B站</span></td>
+        <td title="泥肘！！">泥肘！！</td>
+      </tr>
+      <tr>
+        <td>18</td>
+        <td>氵尼月寸！</td>
+        <td>MXV3</td>
+        <td>❤696</td>
+        <td>4</td>
+        <td><span class="tag tag-bilibili">B站</span></td>
+        <td title="⚡泥 肘⚡">⚡泥 肘⚡</td>
+      </tr>
+      <tr>
+        <td>19</td>
+        <td>就炸你们气不气？</td>
+        <td>锋声犀利</td>
+        <td>❤587</td>
+        <td>6</td>
+        <td><span class="tag tag-bilibili">B站</span></td>
+        <td title="⚡️你 上 你 也 肘⚡️">⚡️你 上 你 也 肘⚡️</td>
+      </tr>
+      <tr>
+        <td>20</td>
+        <td>其实，换世界冠军，他儿子的视角也就是自己给一个零基础的一个小白给干掉了，然后还乐呼呼的开玩笑说我后面有一个老牧师还学了1...</td>
+        <td>幼年总帅</td>
+        <td>❤560</td>
+        <td>5</td>
+        <td><span class="tag tag-bilibili">B站</span></td>
+        <td title="泥肘！！">泥肘！！</td>
+      </tr>
+      <tr>
+        <td>21</td>
+        <td>康肃公“我们来射箭吧🤓”
+卖油翁“可是我不会射箭啊😨”
+康肃公“我十箭中了八九个😏”
+卖油翁（倒油🤓）
+康肃公“...</td>
+        <td>爱露不吃瓜子</td>
+        <td>❤392</td>
+        <td>5</td>
+        <td><span class="tag tag-bilibili">B站</span></td>
+        <td title="不同时代的老叟戏顽童。">不同时代的老叟戏顽童。</td>
+      </tr>
+      <tr>
+        <td>22</td>
+        <td>棋需慢慢下，心急则你肘</td>
+        <td>狂炫两斤砂糖橘</td>
+        <td>❤384</td>
+        <td>4</td>
+        <td><span class="tag tag-bilibili">B站</span></td>
+        <td title="⚡️你 上 你 也 肘⚡️">⚡️你 上 你 也 肘⚡️</td>
+      </tr>
+      <tr>
+        <td>23</td>
+        <td>柯洁下不下的赢褚嬴我不知道，但是我敢肯定，褚嬴要是会玩金铲铲绝对下的赢柯洁[doge]</td>
+        <td>躺平被迫努力</td>
+        <td>❤351</td>
+        <td>2</td>
+        <td><span class="tag tag-bilibili">B站</span></td>
+        <td title="就 你 有 老 叟 啊?！">就 你 有 老 叟 啊?！</td>
+      </tr>
+      <tr>
+        <td>24</td>
+        <td>我小时候就是想学围棋，但是被爸爸拒绝了，那个时候我就知道，已经没有人能打败柯洁了</td>
+        <td>爱做菜的美亚</td>
+        <td>❤279</td>
+        <td>5</td>
+        <td><span class="tag tag-bilibili">B站</span></td>
+        <td title="⚡️你 上 你 也 肘⚡️">⚡️你 上 你 也 肘⚡️</td>
+      </tr>
+      <tr>
+        <td>25</td>
+        <td>其实挺想看ai和褚嬴对下的，打一盘褚嬴发现神之一手跟tm批发一样</td>
+        <td>普洛缇</td>
+        <td>❤270</td>
+        <td>2</td>
+        <td><span class="tag tag-bilibili">B站</span></td>
+        <td title="泥肘！！">泥肘！！</td>
+      </tr>
+      <tr>
+        <td>26</td>
+        <td>这nm谁能绷住[笑哭]</td>
+        <td>Aureler</td>
+        <td>❤176</td>
+        <td>0</td>
+        <td><span class="tag tag-bilibili">B站</span></td>
+        <td title="不同时代的老叟戏顽童。">不同时代的老叟戏顽童。</td>
+      </tr>
+      <tr>
+        <td>27</td>
+        <td>我就炸俞你急不急</td>
+        <td>林沐不想起床</td>
+        <td>❤138</td>
+        <td>0</td>
+        <td><span class="tag tag-bilibili">B站</span></td>
+        <td title="不同时代的老叟戏顽童。">不同时代的老叟戏顽童。</td>
+      </tr>
+      <tr>
+        <td>28</td>
+        <td>@PrinCi_ple</td>
+        <td>星途梦轨</td>
+        <td>❤19</td>
+        <td>0</td>
+        <td><span class="tag tag-bilibili">B站</span></td>
+        <td title="就 你 有 老 叟 啊?！">就 你 有 老 叟 啊?！</td>
+      </tr>
+      <tr>
+        <td>29</td>
+        <td>这分明就是……@Yu-chen__ @芝士_chiizu @七百QiBai3 @SakakuHaya @逗比吃货1256...</td>
+        <td>IZAYOI-Hartmann</td>
+        <td>❤6</td>
+        <td>0</td>
+        <td><span class="tag tag-bilibili">B站</span></td>
+        <td title="⚡️老 叟 肘 高 玩⚡️">⚡️老 叟 肘 高 玩⚡️</td>
+      </tr>
+      <tr>
+        <td>30</td>
+        <td>@椰椰YN @芫厘 @南浔北璃 @菜阿莱 @冬二_依旧揍头硬 @阿尤本尤 @吉祥物小白白 @鱼中之于</td>
+        <td>乾圆</td>
+        <td>❤3</td>
+        <td>1</td>
+        <td><span class="tag tag-bilibili">B站</span></td>
+        <td title="⚡️老 叟 肘 高 玩⚡️">⚡️老 叟 肘 高 玩⚡️</td>
+      </tr></tbody>
+  </table>
+  </div>
+  <div class="note-info">
+    <strong>评论数据来源：</strong>B站评论通过公开 API 按热度排序获取，微博评论从详情页抓取。小红书/抖音因 PC 端反爬限制，评论数据暂缺。
+  </div>
+  
+</div>
+
+
+<!-- Footer -->
+<div style="text-align: center; padding: 2rem; color: var(--text-secondary); font-size: 0.82rem;">
+  竞品爆点分析报告 · 天级自动更新 · 2026-08-21 17:00
+</div>
+
+</div>
+</body>
+</html>
