@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>竞品热帖监控报告 - 2026-08-19 18:00</title>
+<style>
+  :root {
+    --bg: #f8f9fa;
+    --card: #ffffff;
+    --border: #e2e8f0;
+    --text: #1a202c;
+    --text-secondary: #64748b;
+    --accent: #3b82f6;
+    --accent-light: #eff6ff;
+    --success: #22c55e;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    --purple: #8b5cf6;
+    --pink: #ec4899;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    padding: 2rem 1rem;
+  }
+  .container { max-width: 1100px; margin: 0 auto; }
+
+  /* Header */
+  .report-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 2.5rem 2rem;
+    border-radius: 16px;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
+  }
+  .report-header h1 { font-size: 1.6rem; margin-bottom: 1rem; }
+  .report-header .meta { font-size: 0.85rem; opacity: 0.9; }
+  .report-header .meta span { margin-right: 1.5rem; }
+
+  /* Sections */
+  .section {
+    background: var(--card);
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    border: 1px solid var(--border);
+  }
+  .section h2 {
+    font-size: 1.3rem;
+    color: var(--accent);
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--accent-light);
+  }
+  .section h3 {
+    font-size: 1.1rem;
+    color: var(--text);
+    margin: 1.5rem 0 0.8rem;
+  }
+
+  /* Summary box */
+  .summary-box {
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    border-left: 4px solid #f59e0b;
+    padding: 1.2rem 1.5rem;
+    border-radius: 0 8px 8px 0;
+    margin: 1rem 0;
+    font-size: 0.95rem;
+  }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+    font-size: 0.88rem;
+  }
+  th {
+    background: #f1f5f9;
+    color: var(--text);
+    font-weight: 600;
+    text-align: left;
+    padding: 0.7rem 0.8rem;
+    border-bottom: 2px solid var(--border);
+  }
+  td {
+    padding: 0.6rem 0.8rem;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  tr:hover td { background: #f8fafc; }
+  td a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+  td a:hover { text-decoration: underline; }
+
+  /* Tags */
+  .tag {
+    display: inline-block;
+    padding: 1px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    margin: 1px 2px;
+  }
+  .tag-bilibili { background: #dbeafe; color: #1d4ed8; }
+  .tag-weibo { background: #fef3c7; color: #d97706; }
+  .tag-douyin { background: #fce7f3; color: #be185d; }
+  .tag-xiaohongshu { background: #fee2e2; color: #dc2626; }
+  .tag-keyword { background: #f0f9ff; color: #0369a1; }
+
+  /* Archive card for top picks */
+  .archive-card {
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    border: 1px solid #bae6fd;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin: 1rem 0;
+    position: relative;
+  }
+  .archive-card .card-number {
+    position: absolute;
+    top: -12px;
+    left: 16px;
+    background: var(--accent);
+    color: white;
+    padding: 2px 12px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+  .archive-card h4 {
+    margin-top: 0.5rem;
+    color: var(--accent);
+    font-size: 1rem;
+  }
+  .archive-card .field {
+    display: flex;
+    margin: 0.4rem 0;
+    font-size: 0.88rem;
+  }
+  .archive-card .field-label {
+    font-weight: 600;
+    min-width: 80px;
+    color: var(--text-secondary);
+  }
+  .archive-card .field-value { flex: 1; }
+  .archive-card .links {
+    margin-top: 0.8rem;
+    padding-top: 0.8rem;
+    border-top: 1px dashed #bae6fd;
+  }
+  .archive-card .links a {
+    display: inline-block;
+    background: var(--accent);
+    color: white !important;
+    padding: 3px 10px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.78rem;
+    margin: 2px 4px 2px 0;
+  }
+  .archive-card .links a:hover { opacity: 0.85; }
+
+  /* Footer */
+  .report-footer {
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    padding: 1rem;
+    margin-top: 2rem;
+  }
+
+  @media (max-width: 768px) {
+    body { padding: 1rem 0.5rem; }
+    .section { padding: 1.2rem; }
+    .report-header { padding: 1.5rem; }
+    .report-header h1 { font-size: 1.3rem; }
+    table { font-size: 0.8rem; }
+    th, td { padding: 0.4rem; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Header -->
+  <div class="report-header">
+    <h1>猿辅导系「小猿口算 PK」<br>热帖小时级监控报告</h1>
+    <div class="meta">
+      <span>📅 报告时间：2026/8/19 18:25:01</span>
+      <span>🔍 监控关键词：小猿口算 / 口算PK / 老叟戏顽童 / 口算炸鱼 / 猿辅导口算 / 小猿口算PK</span>
+    </div>
+  </div>
+
+  <!-- 执行摘要 -->
+  <div class="section">
+    <h2>一、执行摘要</h2>
+    <div class="summary-box">
+      截至 2026/8/19 18:25:01，共抓取 <strong>104</strong> 条B站视频、<strong>20</strong> 条微博帖子。
+      <br>B站 TOP1：<a href="https://www.bilibili.com/video/BV1EAuk6CEfw" target="_blank" style="color:#92400e;font-weight:600">《顽童戏老叟》</a>（1340.3万 播放）
+      <br>微博 TOP1：<a href="https://weibo.com/detail/5333677199856808" target="_blank" style="color:#92400e;font-weight:600">#心动来电# #卓沅# 卓沅超话 种地吧卓沅的微博直播 ​</a>（❤ 5.9k / 💬 11.4万）
+    </div>
+  </div>
+
+  <!-- 分渠道话题矩阵 -->
+  <div class="section">
+    <h2>二、分渠道热帖话题矩阵</h2>
+
+    <h3>2.1 B站 TOP6 热门视频</h3>
+    <table>
+      <thead>
+        <tr><th>#</th><th>标题</th><th>UP主</th><th>播放量</th><th>发布时间</th><th>渠道 / 关键词</th></tr>
+      </thead>
+      <tbody>
+        
+      <tr>
+        <td><strong>1</strong></td>
+        <td><a href="https://www.bilibili.com/video/BV1EAuk6CEfw" target="_blank">《顽童戏老叟》</a></td>
+        <td>@伤心欲茄222</td>
+        <td>▶ 1340.3万</td>
+        <td>08-12</td>
+        <td><span class="tag tag-bilibili">B站</span> <span class="tag tag-keyword">#老叟戏顽童</span></td>
+      </tr>
+      <tr>
+        <td><strong>2</strong></td>
+        <td><a href="https://www.bilibili.com/video/BV1TiuZ6TEQw" target="_blank">⚡泥 肘⚡</a></td>
+        <td>@污污云</td>
+        <td>▶ 790.2万</td>
+        <td>08-10</td>
+        <td><span class="tag tag-bilibili">B站</span> <span class="tag tag-keyword">#老叟戏顽童</span></td>
+      </tr>
+      <tr>
+        <td><strong>3</strong></td>
+        <td><a href="https://www.bilibili.com/video/BV1QAg768EMb" target="_blank">⚡️你 上 你 也 肘⚡️</a></td>
+        <td>@酸奶煎个蛋</td>
+        <td>▶ 493.5万</td>
+        <td>08-13</td>
+        <td><span class="tag tag-bilibili">B站</span> <span class="tag tag-keyword">#老叟戏顽童</span></td>
+      </tr>
+      <tr>
+        <td><strong>4</strong></td>
+        <td><a href="https://www.bilibili.com/video/BV116gu6AEiw" target="_blank">⚡️老 叟 肘 高 玩⚡️</a></td>
+        <td>@酸奶煎个蛋</td>
+        <td>▶ 458.9万</td>
+        <td>08-15</td>
+        <td><span class="tag tag-bilibili">B站</span> <span class="tag tag-keyword">#老叟戏顽童</span></td>
+      </tr>
+      <tr>
+        <td><strong>5</strong></td>
+        <td><a href="https://www.bilibili.com/video/BV1qF2gY2Ebu" target="_blank">演都不带演 挂哥一秒十题</a></td>
+        <td>@水滴H2O</td>
+        <td>▶ 285.5万</td>
+        <td>2024-10-10</td>
+        <td><span class="tag tag-bilibili">B站</span> <span class="tag tag-keyword">#小猿口算</span></td>
+      </tr>
+      <tr>
+        <td><strong>6</strong></td>
+        <td><a href="https://www.bilibili.com/video/BV1G725YDENh" target="_blank">高手对决！口算pk匹配到高手了</a></td>
+        <td>@黄老虎大魔术师</td>
+        <td>▶ 280.2万</td>
+        <td>2024-10-10</td>
+        <td><span class="tag tag-bilibili">B站</span> <span class="tag tag-keyword">#口算PK</span></td>
+      </tr>
+      </tbody>
+    </table>
+
+    <h3>2.2 微博 TOP6 热门帖子</h3>
+    <table>
+      <thead>
+        <tr><th>#</th><th>内容</th><th>作者</th><th>互动</th><th>发布时间</th><th>渠道 / 关键词</th></tr>
+      </thead>
+      <tbody>
+        
+      <tr>
+        <td><strong>1</strong></td>
+        <td><a href="https://weibo.com/detail/5333677199856808" target="_blank">#心动来电# #卓沅# 卓沅超话 种地吧卓沅的微博直播 ​</a></td>
+        <td>@种地吧卓沅</td>
+        <td>❤ 5.9k 💬 11.4万 🔄 697</td>
+        <td>40分钟前</td>
+        <td><span class="tag tag-weibo">微博</span> <span class="tag tag-keyword">#猿辅导口算</span></td>
+      </tr>
+      <tr>
+        <td><strong>2</strong></td>
+        <td><a href="https://weibo.com/detail/5333677202741687" target="_blank">七夕快乐 😽🩵#允植yoonzip##植得一见##七夕跨海告白# ​</a></td>
+        <td>@金允植</td>
+        <td>❤ 8.1万 💬 9.2k 🔄 5.4k</td>
+        <td>40分钟前</td>
+        <td><span class="tag tag-weibo">微博</span> <span class="tag tag-keyword">#猿辅导口算</span></td>
+      </tr>
+      <tr>
+        <td><strong>3</strong></td>
+        <td><a href="https://weibo.com/detail/5333677485592486" target="_blank">七夕快乐 ​</a></td>
+        <td>@LGDNBW-九尾</td>
+        <td>❤ 2.9万 💬 1.5万 🔄 3.4k</td>
+        <td>39分钟前</td>
+        <td><span class="tag tag-weibo">微博</span> <span class="tag tag-keyword">#猿辅导口算</span></td>
+      </tr>
+      <tr>
+        <td><strong>4</strong></td>
+        <td><a href="https://weibo.com/detail/5333675418060685" target="_blank">七夕快乐👓🩵🫧#心动来电# ​</a></td>
+        <td>@宋雨琦_i-dle</td>
+        <td>❤ 2.3万 💬 9.5k 🔄 1.2万</td>
+        <td>47分钟前</td>
+        <td><span class="tag tag-weibo">微博</span> <span class="tag tag-keyword">#猿辅导口算</span></td>
+      </tr>
+      <tr>
+        <td><strong>5</strong></td>
+        <td><a href="https://weibo.com/detail/5333677950373583" target="_blank">王俊凯超话#王俊凯当潮汐漫溢巡回演唱会# 南京站两场预售门票已售罄！我们在夏末初秋的金陵城，抓住夏天的尾巴再见一面～ @TFBOYS-王俊凯 📍南京站演出时间：8月29日-8月30日演出地点：梦之...</a></td>
+        <td>@王俊凯KarryWang工作室</td>
+        <td>❤ 2.6万 💬 8.0k 🔄 5.0k</td>
+        <td>37分钟前</td>
+        <td><span class="tag tag-weibo">微博</span> <span class="tag tag-keyword">#猿辅导口算</span></td>
+      </tr>
+      <tr>
+        <td><strong>6</strong></td>
+        <td><a href="https://weibo.com/detail/5333576070989116" target="_blank">第五人格陪玩超话 有无接单练1p1的我五阶三人，想要那种老叟戏顽童的能指点一下的，带0.5/1h价和常用角色来 ​</a></td>
+        <td>@温带雨林1</td>
+        <td>❤ 3 💬 36 🔄 0</td>
+        <td>今天10:38</td>
+        <td><span class="tag tag-weibo">微博</span> <span class="tag tag-keyword">#老叟戏顽童</span></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 视频档案卡 -->
+  <div class="section">
+    <h2>三、爆款视频档案卡</h2>
+
+    
+    <div class="archive-card">
+      <div class="card-number">档案卡 #1</div>
+      <h4>《顽童戏老叟》</h4>
+      <div class="field"><span class="field-label">UP主</span><span class="field-value">@伤心欲茄222</span></div>
+      <div class="field"><span class="field-label">平台</span><span class="field-value"><span class="tag tag-bilibili">B站</span></span></div>
+      <div class="field"><span class="field-label">播放量</span><span class="field-value">1340.3万</span></div>
+      <div class="field"><span class="field-label">弹幕</span><span class="field-value">3.7k</span></div>
+      <div class="field"><span class="field-label">时长</span><span class="field-value">01:43</span></div>
+      <div class="field"><span class="field-label">发布时间</span><span class="field-value">08-12</span></div>
+      <div class="field"><span class="field-label">搜索关键词</span><span class="field-value"><span class="tag tag-keyword">#老叟戏顽童</span></span></div>
+      <div class="links">
+        <a href="https://www.bilibili.com/video/BV1EAuk6CEfw" target="_blank">🔗 查看视频</a>
+      </div>
+    </div>
+    <div class="archive-card">
+      <div class="card-number">档案卡 #2</div>
+      <h4>⚡泥 肘⚡</h4>
+      <div class="field"><span class="field-label">UP主</span><span class="field-value">@污污云</span></div>
+      <div class="field"><span class="field-label">平台</span><span class="field-value"><span class="tag tag-bilibili">B站</span></span></div>
+      <div class="field"><span class="field-label">播放量</span><span class="field-value">790.2万</span></div>
+      <div class="field"><span class="field-label">弹幕</span><span class="field-value">4.2万</span></div>
+      <div class="field"><span class="field-label">时长</span><span class="field-value">01:35</span></div>
+      <div class="field"><span class="field-label">发布时间</span><span class="field-value">08-10</span></div>
+      <div class="field"><span class="field-label">搜索关键词</span><span class="field-value"><span class="tag tag-keyword">#老叟戏顽童</span></span></div>
+      <div class="links">
+        <a href="https://www.bilibili.com/video/BV1TiuZ6TEQw" target="_blank">🔗 查看视频</a>
+      </div>
+    </div>
+    <div class="archive-card">
+      <div class="card-number">档案卡 #3</div>
+      <h4>⚡️你 上 你 也 肘⚡️</h4>
+      <div class="field"><span class="field-label">UP主</span><span class="field-value">@酸奶煎个蛋</span></div>
+      <div class="field"><span class="field-label">平台</span><span class="field-value"><span class="tag tag-bilibili">B站</span></span></div>
+      <div class="field"><span class="field-label">播放量</span><span class="field-value">493.5万</span></div>
+      <div class="field"><span class="field-label">弹幕</span><span class="field-value">6.5k</span></div>
+      <div class="field"><span class="field-label">时长</span><span class="field-value">01:23</span></div>
+      <div class="field"><span class="field-label">发布时间</span><span class="field-value">08-13</span></div>
+      <div class="field"><span class="field-label">搜索关键词</span><span class="field-value"><span class="tag tag-keyword">#老叟戏顽童</span></span></div>
+      <div class="links">
+        <a href="https://www.bilibili.com/video/BV1QAg768EMb" target="_blank">🔗 查看视频</a>
+      </div>
+    </div>
+    <div class="archive-card">
+      <div class="card-number">档案卡 #4</div>
+      <h4>⚡️老 叟 肘 高 玩⚡️</h4>
+      <div class="field"><span class="field-label">UP主</span><span class="field-value">@酸奶煎个蛋</span></div>
+      <div class="field"><span class="field-label">平台</span><span class="field-value"><span class="tag tag-bilibili">B站</span></span></div>
+      <div class="field"><span class="field-label">播放量</span><span class="field-value">458.9万</span></div>
+      <div class="field"><span class="field-label">弹幕</span><span class="field-value">4.7k</span></div>
+      <div class="field"><span class="field-label">时长</span><span class="field-value">01:28</span></div>
+      <div class="field"><span class="field-label">发布时间</span><span class="field-value">08-15</span></div>
+      <div class="field"><span class="field-label">搜索关键词</span><span class="field-value"><span class="tag tag-keyword">#老叟戏顽童</span></span></div>
+      <div class="links">
+        <a href="https://www.bilibili.com/video/BV116gu6AEiw" target="_blank">🔗 查看视频</a>
+      </div>
+    </div>
+    <div class="archive-card">
+      <div class="card-number">档案卡 #5</div>
+      <h4>演都不带演 挂哥一秒十题</h4>
+      <div class="field"><span class="field-label">UP主</span><span class="field-value">@水滴H2O</span></div>
+      <div class="field"><span class="field-label">平台</span><span class="field-value"><span class="tag tag-bilibili">B站</span></span></div>
+      <div class="field"><span class="field-label">播放量</span><span class="field-value">285.5万</span></div>
+      <div class="field"><span class="field-label">弹幕</span><span class="field-value">1.5k</span></div>
+      <div class="field"><span class="field-label">时长</span><span class="field-value">01:14</span></div>
+      <div class="field"><span class="field-label">发布时间</span><span class="field-value">2024-10-10</span></div>
+      <div class="field"><span class="field-label">搜索关键词</span><span class="field-value"><span class="tag tag-keyword">#小猿口算</span></span></div>
+      <div class="links">
+        <a href="https://www.bilibili.com/video/BV1qF2gY2Ebu" target="_blank">🔗 查看视频</a>
+      </div>
+    </div>
+    <div class="archive-card">
+      <div class="card-number">档案卡 #6</div>
+      <h4>高手对决！口算pk匹配到高手了</h4>
+      <div class="field"><span class="field-label">UP主</span><span class="field-value">@黄老虎大魔术师</span></div>
+      <div class="field"><span class="field-label">平台</span><span class="field-value"><span class="tag tag-bilibili">B站</span></span></div>
+      <div class="field"><span class="field-label">播放量</span><span class="field-value">280.2万</span></div>
+      <div class="field"><span class="field-label">弹幕</span><span class="field-value">466</span></div>
+      <div class="field"><span class="field-label">时长</span><span class="field-value">00:17</span></div>
+      <div class="field"><span class="field-label">发布时间</span><span class="field-value">2024-10-10</span></div>
+      <div class="field"><span class="field-label">搜索关键词</span><span class="field-value"><span class="tag tag-keyword">#口算PK</span></span></div>
+      <div class="links">
+        <a href="https://www.bilibili.com/video/BV1G725YDENh" target="_blank">🔗 查看视频</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="report-footer">
+    自动生成于 2026/8/19 18:25:01 | 数据来源：B站 + 微博（小时级自动抓取）
+  </div>
+
+</div>
+</body>
+</html>

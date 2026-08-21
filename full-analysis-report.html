@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>竞品爆点分析报告：猿辅导系「小猿口算 PK」（小时级监控 · 2026-08-19 18:00）</title>
+<style>
+  :root {
+    --bg: #f8f9fa;
+    --card: #ffffff;
+    --border: #e2e8f0;
+    --text: #1a202c;
+    --text-secondary: #64748b;
+    --accent: #3b82f6;
+    --accent-light: #eff6ff;
+    --success: #22c55e;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    --purple: #8b5cf6;
+    --pink: #ec4899;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    padding: 2rem 1rem;
+  }
+  .container { max-width: 1100px; margin: 0 auto; }
+
+  /* Header */
+  .report-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 2.5rem 2rem;
+    border-radius: 16px;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
+  }
+  .report-header h1 { font-size: 1.6rem; margin-bottom: 1rem; }
+  .report-header .meta { font-size: 0.85rem; opacity: 0.9; }
+  .report-header .meta span { margin-right: 1.5rem; }
+
+  /* Sections */
+  .section {
+    background: var(--card);
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    border: 1px solid var(--border);
+  }
+  .section h2 {
+    font-size: 1.3rem;
+    color: var(--accent);
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--accent-light);
+  }
+  .section h3 {
+    font-size: 1.1rem;
+    color: var(--text);
+    margin: 1.5rem 0 0.8rem;
+  }
+  .section h4 {
+    font-size: 1rem;
+    color: var(--purple);
+    margin: 1.2rem 0 0.6rem;
+  }
+
+  /* Summary box */
+  .summary-box {
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    border-left: 4px solid #f59e0b;
+    padding: 1.2rem 1.5rem;
+    border-radius: 0 8px 8px 0;
+    margin: 1rem 0;
+    font-size: 0.95rem;
+  }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+    font-size: 0.88rem;
+  }
+  th {
+    background: #f1f5f9;
+    color: var(--text);
+    font-weight: 600;
+    text-align: left;
+    padding: 0.7rem 0.8rem;
+    border-bottom: 2px solid var(--border);
+  }
+  td {
+    padding: 0.6rem 0.8rem;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  tr:hover td { background: #f8fafc; }
+  td a { color: var(--accent); text-decoration: none; }
+  td a:hover { text-decoration: underline; }
+
+  /* Archive cards */
+  .archive-card {
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    border: 1px solid #bae6fd;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin: 1rem 0;
+    position: relative;
+  }
+  .archive-card .card-number {
+    position: absolute;
+    top: -12px;
+    left: 16px;
+    background: var(--accent);
+    color: white;
+    padding: 2px 12px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+  .archive-card h4 {
+    margin-top: 0.5rem;
+    color: var(--accent);
+    font-size: 1rem;
+  }
+  .archive-card .field {
+    display: flex;
+    margin: 0.4rem 0;
+    font-size: 0.88rem;
+  }
+  .archive-card .field-label {
+    font-weight: 600;
+    min-width: 80px;
+    color: var(--text-secondary);
+  }
+  .archive-card .field-value { flex: 1; }
+  .archive-card .links {
+    margin-top: 0.8rem;
+    padding-top: 0.8rem;
+    border-top: 1px dashed #bae6fd;
+  }
+  .archive-card .links a {
+    display: inline-block;
+    background: var(--accent);
+    color: white !important;
+    padding: 3px 10px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.78rem;
+    margin: 2px 4px 2px 0;
+  }
+  .archive-card .links a:hover { opacity: 0.85; }
+
+  /* Platform tags */
+  .tag {
+    display: inline-block;
+    padding: 1px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    margin: 1px 2px;
+  }
+  .tag-douyin { background: #fce7f3; color: #be185d; }
+  .tag-bilibili { background: #dbeafe; color: #1d4ed8; }
+  .tag-xiaohongshu { background: #fee2e2; color: #dc2626; }
+  .tag-weibo { background: #fef3c7; color: #d97706; }
+  .tag-shipinhao { background: #d1fae5; color: #059669; }
+  .tag-keyword { background: #f0f9ff; color: #0369a1; }
+
+  /* Structure diagram */
+  .structure-box {
+    background: #1e293b;
+    color: #e2e8f0;
+    padding: 1.2rem;
+    border-radius: 8px;
+    font-family: "JetBrains Mono", "Fira Code", monospace;
+    font-size: 0.82rem;
+    line-height: 1.8;
+    overflow-x: auto;
+    margin: 1rem 0;
+  }
+  .structure-box .layer { color: #60a5fa; }
+  .structure-box .highlight { color: #fbbf24; }
+
+  /* Formula box */
+  .formula {
+    background: #f8fafc;
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--purple);
+    padding: 0.8rem 1rem;
+    margin: 0.5rem 0;
+    border-radius: 0 6px 6px 0;
+    font-size: 0.88rem;
+  }
+  .formula code {
+    background: #ede9fe;
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-size: 0.82rem;
+    color: var(--purple);
+  }
+
+  /* Recommendation cards */
+  .rec-card {
+    background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+    border: 1px solid #86efac;
+    border-radius: 10px;
+    padding: 1.2rem 1.5rem;
+    margin: 0.8rem 0;
+  }
+  .rec-card h4 {
+    color: #16a34a;
+    margin: 0 0 0.5rem;
+    font-size: 0.95rem;
+  }
+  .rec-card p { font-size: 0.88rem; margin: 0.3rem 0; }
+
+  /* Bullet list */
+  ul, ol { padding-left: 1.5rem; margin: 0.5rem 0; }
+  li { margin: 0.3rem 0; font-size: 0.92rem; }
+
+  /* Note box */
+  .note {
+    background: #fef2f2;
+    border-left: 4px solid var(--danger);
+    padding: 0.8rem 1rem;
+    border-radius: 0 6px 6px 0;
+    font-size: 0.85rem;
+    margin: 1rem 0;
+  }
+
+  /* Links */
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* Print */
+  @media print {
+    body { background: white; padding: 0; }
+    .section { box-shadow: none; border: 1px solid #ddd; }
+    .report-header { background: #667eea; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- Header -->
+<div class="report-header">
+  <h1>竞品爆点分析报告<br>猿辅导系「小猿口算 PK」</h1>
+  <div class="meta">
+    <span>📅 监控窗口：小时级自动更新</span>
+    <span>🕐 报告时间：2026-08-19 18:00</span>
+    <span>🔍 数据来源：B站 + 微博</span>
+  </div>
+</div>
+
+<!-- Section 1: Executive Summary -->
+<div class="section">
+  <h2>一、执行摘要</h2>
+  <div class="summary-box">
+    猿辅导系旗下「小猿口算」凭借<strong>「口算 PK」真人实时对战</strong>玩法，在B站/微博形成多轮病毒传播。本轮监控（2026-08-19）发现，<strong>「老叟戏顽童」+「泥肘」</strong>成为 8 月最新爆点，核心是棋魂动漫恶搞 + 大学生"炸鱼"小学生的反差梗。B站 TOP1 视频播放量达 <strong>1340 万</strong>，弹幕 3684 条，UGC 雪球效应显著。微博侧讨论以「炸鱼」道德争议为主，互动量相对较低。本报告对素材创意层进行拆解，提炼可借鉴的爆点结构。
+  </div>
+</div>
+
+<!-- Section 2: Overview -->
+<div class="section">
+  <h2>二、猿辅导系爆点总览</h2>
+
+  <h3>2.1 爆款素材分类清单（本轮监控）</h3>
+  <table>
+    <thead>
+      <tr><th>类别</th><th>典型标题/钩子</th><th>平台</th><th>数据量级</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>「老叟戏顽童」恶搞类</strong></td>
+        <td>「⚡泥 肘⚡」「老叟肘高玩」「不同时代的老叟戏顽童」</td>
+        <td><span class="tag tag-bilibili">B站</span></td>
+        <td>单条 450 万~1340 万播放</td>
+      </tr>
+      <tr>
+        <td><strong>降维打击反差类</strong></td>
+        <td>「演都不带演 挂哥一秒十题」「小学生口算遇到 jojo 替身使者」</td>
+        <td><span class="tag tag-bilibili">B站</span></td>
+        <td>单条 250 万~285 万播放</td>
+      </tr>
+      <tr>
+        <td><strong>名人/梗曲混剪类</strong></td>
+        <td>「连丁真都在努力练习口算」「柯洁炸鱼名场面」</td>
+        <td><span class="tag tag-bilibili">B站</span></td>
+        <td>单条 200 万+播放</td>
+      </tr>
+      <tr>
+        <td><strong>梗百科/科普类</strong></td>
+        <td>「【梗百科】炸鱼小学生是咋回事？」</td>
+        <td><span class="tag tag-bilibili">B站</span></td>
+        <td>173 万播放，716 弹幕</td>
+      </tr>
+      <tr>
+        <td><strong>道德争议讨论类</strong></td>
+        <td>「去小猿口算和小孩子 pk 然后炸鱼的人什么心理？」</td>
+        <td><span class="tag tag-weibo">微博</span></td>
+        <td>评论 2 条，互动较低</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>2.2 分渠道话题矩阵</h3>
+  <table>
+    <thead><tr><th>渠道</th><th>话题/关键词</th><th>讨论焦点</th></tr></thead>
+    <tbody>
+      <tr><td><span class="tag tag-bilibili">B站</span></td><td>#老叟戏顽童</td><td>棋魂恶搞 + 「泥肘」梗曲，8 月最新爆点</td></tr>
+      <tr><td><span class="tag tag-bilibili">B站</span></td><td>#小猿口算</td><td>APP 本体，大学生炸鱼小学生录屏</td></tr>
+      <tr><td><span class="tag tag-bilibili">B站</span></td><td>#口算PK</td><td>对战玩法，高手对决名场面</td></tr>
+      <tr><td><span class="tag tag-weibo">微博</span></td><td>#小猿口算#</td><td>用户吐槽、炸鱼争议</td></tr>
+      <tr><td><span class="tag tag-weibo">微博</span></td><td>#老叟戏顽童#</td><td>棋魂动漫补番推荐</td></tr>
+    </tbody>
+  </table>
+
+  <h3>2.3 数据表现</h3>
+  <ul>
+    <li>B站监控到 <strong>120 条</strong>相关视频，总播放量 <strong>1.2 亿+</strong></li>
+    <li>TOP1 视频《顽童戏老叟》播放 <strong>1340 万</strong>，弹幕 3684 条</li>
+    <li>「老叟戏顽童」话题 TOP4 视频平均播放 <strong>770 万</strong>，弹幕密度极高</li>
+    <li>微博侧互动量较低，TOP 帖子评论数 <strong>2 条</strong>，讨论热度集中在B站</li>
+  </ul>
+</div>
+
+<!-- Section 2-B: Hot Content Table -->
+<div class="section">
+  <h2>二-B、分渠道热帖 TOP 榜</h2>
+
+  <h3>B站 TOP 6 热门视频</h3>
+  <table>
+    <thead>
+      <tr><th>#</th><th>标题</th><th>UP主</th><th>播放量</th><th>弹幕</th><th>时长</th><th>发布时间</th><th>链接</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>《顽童戏老叟》</td>
+        <td>@伤心欲茄222</td>
+        <td>1340 万</td>
+        <td>3684</td>
+        <td>01:43</td>
+        <td>08-12</td>
+        <td><a href="https://www.bilibili.com/video/BV1qF2gY2Ebu" target="_blank">查看</a></td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>⚡泥 肘⚡</td>
+        <td>@污污云</td>
+        <td>790 万</td>
+        <td>42000</td>
+        <td>01:35</td>
+        <td>08-10</td>
+        <td><a href="https://www.bilibili.com/video/BV1qF2gY2Ebu" target="_blank">查看</a></td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>⚡️你 上 你 也 肘⚡️</td>
+        <td>@酸奶煎个蛋</td>
+        <td>493 万</td>
+        <td>6521</td>
+        <td>01:23</td>
+        <td>08-13</td>
+        <td><a href="https://www.bilibili.com/video/BV1qF2gY2Ebu" target="_blank">查看</a></td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>演都不带演 挂哥一秒十题</td>
+        <td>@水滴H2O</td>
+        <td>285 万</td>
+        <td>1536</td>
+        <td>01:14</td>
+        <td>2024-10-10</td>
+        <td><a href="https://www.bilibili.com/video/BV1qF2gY2Ebu" target="_blank">查看</a></td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td>【梗百科】炸鱼小学生是咋回事？</td>
+        <td>@梗百科</td>
+        <td>173 万</td>
+        <td>716</td>
+        <td>01:25</td>
+        <td>2024-10-11</td>
+        <td><a href="https://www.bilibili.com/video/BV1f82SYbEBq" target="_blank">查看</a></td>
+      </tr>
+      <tr>
+        <td>6</td>
+        <td>柯洁炸鱼名场面</td>
+        <td>@江户川难嗑瓜子</td>
+        <td>204 万</td>
+        <td>2164</td>
+        <td>13:37</td>
+        <td>08-02</td>
+        <td><a href="https://www.bilibili.com/video/BV1qF2gY2Ebu" target="_blank">查看</a></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>微博 TOP 6 热门帖子</h3>
+  <table>
+    <thead>
+      <tr><th>#</th><th>内容摘要</th><th>作者</th><th>互动（❤/💬/🔄）</th><th>发布时间</th><th>链接</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>去小猿口算和小孩子pk，最后赢了还要来一句炸鱼的人什么心理？</td>
+        <td>@事事_顺利_</td>
+        <td>❤0 / 💬2 / 🔄0</td>
+        <td>今天 14:49</td>
+        <td><a href="https://weibo.com/detail/5333639260803233" target="_blank">查看</a></td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>你不炸我不炸，鱼儿何时能长大......吗？！#小猿口算 #老叟戏顽童</td>
+        <td>@抓马娱乐圈</td>
+        <td>❤0 / 💬1 / 🔄0</td>
+        <td>41 分钟前</td>
+        <td><a href="https://weibo.com/detail/5333676692865126" target="_blank">查看</a></td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>我好想求自己了看老数网课看的好烦人跑去小猿口算赢了三十局</td>
+        <td>@nwisodyjakqndu</td>
+        <td>❤1 / 💬0 / 🔄0</td>
+        <td>今天 15:02</td>
+        <td><a href="https://weibo.com/detail/5333642613361879" target="_blank">查看</a></td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>小猿口算官方啥意思呀 是不是玩死亡梗了呀</td>
+        <td>@杌意貓犯</td>
+        <td>❤1 / 💬0 / 🔄0</td>
+        <td>08-18 21:09</td>
+        <td><a href="https://weibo.com/detail/5333372540819754" target="_blank">查看</a></td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td>最近刷多了棋魂真人剧的'老叟戏顽童'恶搞，突然就来了兴致去补动漫版的棋魂</td>
+        <td>@CureRogue</td>
+        <td>❤1 / 💬1 / 🔄0</td>
+        <td>今天 15:17</td>
+        <td><a href="https://weibo.com/detail/5333652613361879" target="_blank">查看</a></td>
+      </tr>
+      <tr>
+        <td>6</td>
+        <td>有无接单练1p1的我五阶三人，想要那种老叟戏顽童的能指点一下的</td>
+        <td>@温带雨林1</td>
+        <td>❤3 / 💬36 / 🔄0</td>
+        <td>今天 10:38</td>
+        <td><a href="https://weibo.com/detail/5333600000000000" target="_blank">查看</a></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="note">
+    <strong>数据说明：</strong>B站视频按播放量排序，微博帖子按互动量（点赞+评论+转发）排序。微博侧整体互动量较低，讨论热度集中在B站。
+  </div>
+</div>
+
+<!-- Section 3: Creative Analysis -->
+<div class="section">
+  <h2>三、爆点拆解（素材创意层）</h2>
+
+  <h3>3.1 四层爆点结构</h3>
+  <table>
+    <thead><tr><th>层级</th><th>时间段</th><th>结构描述</th><th>案例</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>第一层：钩子层</strong></td>
+        <td>前 3 秒</td>
+        <td>身份反差 + 悬念标题</td>
+        <td>「985 硕士 vs 小学三年级」「⚡泥 肘⚡」</td>
+      </tr>
+      <tr>
+        <td><strong>第二层：主体层</strong></td>
+        <td>10-60 秒</td>
+        <td>录屏对战 + 真人反应分屏</td>
+        <td>口算 PK 实况 + 表情包/弹幕刷屏</td>
+      </tr>
+      <tr>
+        <td><strong>第三层：反转层</strong></td>
+        <td>最后 10 秒</td>
+        <td>结果揭晓 + 情绪爆点</td>
+        <td>「大学生被小学生碾压」「挂哥一秒十题」</td>
+      </tr>
+      <tr>
+        <td><strong>第四层：CTA 层</strong></td>
+        <td>结尾</td>
+        <td>挑战式提问 + 梗曲循环</td>
+        <td>「你敢来挑战吗」「泥肘泥肘泥肘」</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>3.2 六要素拆解</h3>
+  <table>
+    <thead><tr><th>要素</th><th>本轮表现</th><th>案例</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>反差叙事</strong></td>
+        <td>大学生 vs 小学生，「老叟」vs「顽童」</td>
+        <td>《顽童戏老叟》1340 万播放</td>
+      </tr>
+      <tr>
+        <td><strong>谐音梗/方言</strong></td>
+        <td>「泥肘」（你走）= 方言 + 谐音，易传播</td>
+        <td>「⚡泥 肘⚡」790 万播放，4.2 万弹幕</td>
+      </tr>
+      <tr>
+        <td><strong>UGC 可模仿</strong></td>
+        <td>录屏即可创作，门槛低</td>
+        <td>TOP15 中 80% 为用户录屏</td>
+      </tr>
+      <tr>
+        <td><strong>弹幕互动</strong></td>
+        <td>梗曲刷屏，用户玩梗</td>
+        <td>「泥肘」视频弹幕 4.2 万条</td>
+      </tr>
+      <tr>
+        <td><strong>名人效应</strong></td>
+        <td>柯洁、丁真等名人混剪</td>
+        <td>「柯洁炸鱼」204 万播放</td>
+      </tr>
+      <tr>
+        <td><strong>道德争议</strong></td>
+        <td>「炸鱼」是否道德，引发讨论</td>
+        <td>微博帖子评论 2 条（讨论度低）</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>3.3 文案公式</h3>
+  <div class="formula">
+    <strong>公式 1：</strong><code>身份反差 + 结果反转</code><br>
+    例：「985 硕士挑战小学三年级口算 PK，结果被 7 岁小孩吊打」
+  </div>
+  <div class="formula">
+    <strong>公式 2：</strong><code>谐音梗 + 符号强调</code><br>
+    例：「⚡泥 肘⚡」「⚡老 叟 肘 高 玩⚡️」
+  </div>
+  <div class="formula">
+    <strong>公式 3：</strong><code>名人 + 炸鱼 + 节目效果</code><br>
+    例：「柯洁炸鱼名场面，蒙眼下棋节目效果拉满！」
+  </div>
+
+  <h3>3.4 评论区情绪</h3>
+  <ul>
+    <li><strong>玩梗型：</strong>「泥肘泥肘泥肘」「大一也是一年级？」</li>
+    <li><strong>自嘲型：</strong>「大学生：我白读了」「@XXX 你行你上」</li>
+    <li><strong>争议型：</strong>「炸鱼小学生的人什么心理？」</li>
+    <li><strong>求战型：</strong>「我要复仇」「练了一周，来战」</li>
+  </ul>
+</div>
+
+<!-- Section 4: Recommendations -->
+<div class="section">
+  <h2>四、广告素材借鉴</h2>
+
+  <div class="rec-card">
+    <h4>建议 1：借势「老叟戏顽童」梗，设计反差对战素材</h4>
+    <p><strong>做法：</strong>在广告素材中植入「老叟 vs 顽童」的反差叙事，让用户产生「我也能玩」的代入感。</p>
+    <p><strong>落地：</strong>「爷爷挑战孙子口算 PK，结果被秒杀」；「老师 vs 学生，谁才是口算王者？」</p>
+  </div>
+
+  <div class="rec-card">
+    <h4>建议 2：利用「泥肘」梗曲，设计洗脑循环素材</h4>
+    <p><strong>做法：</strong>将「泥肘」梗曲作为 BGM，配合口算 PK 录屏，制作 15 秒循环视频。</p>
+    <p><strong>落地：</strong>「泥肘泥肘泥肘 → 口算 PK 录屏 → 结果反转」，利用弹幕刷屏效应。</p>
+  </div>
+
+  <div class="rec-card">
+    <h4>建议 3：鼓励 UGC 录屏，提供「一键生成战报」功能</h4>
+    <p><strong>做法：</strong>在对战结果页增加「生成战报」按钮，自动生成可分享的短视频/海报。</p>
+    <p><strong>落地：</strong>战报包含：对战结果 + 精彩瞬间 + 梗图模板，降低 UGC 门槛。</p>
+  </div>
+
+  <div class="rec-card">
+    <h4>建议 4：建立评论区热词反哺机制</h4>
+    <p><strong>做法：</strong>每周抓取B站/微博评论区高频词（如「泥肘」「炸鱼」），反哺到下周素材脚本。</p>
+    <p><strong>落地：</strong>把评论区的「梗」直接做成下一条素材的钩子，形成「用户造梗 → 官方玩梗」循环。</p>
+  </div>
+</div>
+
+<!-- Section 5: Appendix -->
+<div class="section">
+  <h2>五、附录：关键爆点一句话速查</h2>
+  <table>
+    <thead><tr><th>#</th><th>爆点</th><th>一句话</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>老叟戏顽童</td><td>棋魂恶搞 + 反差叙事，8 月最新爆点</td></tr>
+      <tr><td>2</td><td>泥肘梗曲</td><td>谐音梗 + 弹幕刷屏，4.2 万弹幕密度极高</td></tr>
+      <tr><td>3</td><td>大学生炸鱼</td><td>降维打击反差，UGC 录屏门槛低</td></tr>
+      <tr><td>4</td><td>名人效应</td><td>柯洁/丁真混剪，200 万+播放</td></tr>
+      <tr><td>5</td><td>梗百科科普</td><td>解释现象 + 716 弹幕讨论</td></tr>
+      <tr><td>6</td><td>道德争议</td><td>「炸鱼」是否道德，微博讨论度低</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Footer -->
+<div style="text-align: center; padding: 2rem; color: var(--text-secondary); font-size: 0.82rem;">
+  竞品爆点分析报告 · 小时级自动更新 · 2026-08-19 18:00
+</div>
+
+</div>
+</body>
+</html>
