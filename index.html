@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>小猿口算PK · 热帖监控报告</title>
+<style>
+  :root {
+    --bg: #f8f9fa; --card: #ffffff; --border: #e2e8f0;
+    --text: #1a202c; --text-secondary: #64748b;
+    --accent: #3b82f6; --accent-light: #eff6ff;
+    --success: #22c55e; --warning: #f59e0b;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.7; padding: 2rem 1rem;
+  }
+  .container { max-width: 900px; margin: 0 auto; }
+  .header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white; padding: 2.5rem 2rem; border-radius: 16px;
+    margin-bottom: 2rem; box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
+  }
+  .header h1 { font-size: 1.8rem; margin-bottom: 0.5rem; }
+  .header .subtitle { font-size: 1rem; opacity: 0.9; }
+  .stats {
+    display: flex; gap: 1.5rem; margin-top: 1.5rem; flex-wrap: wrap;
+  }
+  .stat-item {
+    background: rgba(255,255,255,0.15); padding: 0.8rem 1.2rem;
+    border-radius: 8px; backdrop-filter: blur(4px);
+  }
+  .stat-item .value { font-size: 1.4rem; font-weight: 700; }
+  .stat-item .label { font-size: 0.8rem; opacity: 0.85; }
+  .card {
+    background: var(--card); border-radius: 12px; padding: 2rem;
+    margin-bottom: 1.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    border: 1px solid var(--border);
+  }
+  .card h2 {
+    font-size: 1.2rem; color: var(--accent); margin-bottom: 1rem;
+    padding-bottom: 0.5rem; border-bottom: 2px solid var(--accent-light);
+  }
+  table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+  th {
+    background: #f1f5f9; font-weight: 600; text-align: left;
+    padding: 0.7rem 0.8rem; border-bottom: 2px solid var(--border);
+  }
+  td { padding: 0.6rem 0.8rem; border-bottom: 1px solid var(--border); }
+  tr:hover td { background: #f8fafc; }
+  td a { color: var(--accent); text-decoration: none; font-weight: 500; }
+  td a:hover { text-decoration: underline; }
+  .badge {
+    display: inline-block; font-size: 0.7rem; padding: 0.15rem 0.5rem;
+    border-radius: 4px; margin-left: 0.5rem; font-weight: 600;
+    vertical-align: middle;
+  }
+  .badge.latest { background: #dcfce7; color: #166534; }
+  .footer {
+    text-align: center; color: var(--text-secondary);
+    font-size: 0.8rem; margin-top: 2rem; padding: 1rem;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>🔥 小猿口算PK · 热帖监控报告</h1>
+    <div class="subtitle">猿辅导系竞品内容天级自动监控 · 四平台（B站/微博/小红书/抖音）</div>
+    <div class="stats">
+      <div class="stat-item">
+        <div class="value">7</div>
+        <div class="label">历史报告数</div>
+      </div>
+      <div class="stat-item">
+        <div class="value">2026-08-21 11:00</div>
+        <div class="label">最近更新</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📋 全部报告</h2>
+    <table>
+      <thead>
+        <tr>
+          <th style="width:50px">#</th>
+          <th>报告时间</th>
+          <th style="width:100px">文件大小</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+      <tr>
+        <td>1</td>
+        <td>
+          <a href="./report-2026-08-21-11.html">2026-08-21 11:00</a>
+          <span class="badge latest">最新</span>
+        </td>
+        <td>49.3 KB</td>
+      </tr>
+
+      <tr>
+        <td>2</td>
+        <td>
+          <a href="./report-2026-08-20-18.html">2026-08-20 18:00</a>
+          
+        </td>
+        <td>43.0 KB</td>
+      </tr>
+
+      <tr>
+        <td>3</td>
+        <td>
+          <a href="./report-2026-08-20-17.html">2026-08-20 17:00</a>
+          
+        </td>
+        <td>38.0 KB</td>
+      </tr>
+
+      <tr>
+        <td>4</td>
+        <td>
+          <a href="./report-2026-08-20-14.html">2026-08-20 14:00</a>
+          
+        </td>
+        <td>22.4 KB</td>
+      </tr>
+
+      <tr>
+        <td>5</td>
+        <td>
+          <a href="./report-2026-08-20-10.html">2026-08-20 10:00</a>
+          
+        </td>
+        <td>22.4 KB</td>
+      </tr>
+
+      <tr>
+        <td>6</td>
+        <td>
+          <a href="./full-analysis-report.html">2026/8/19 18:53:18</a>
+          
+        </td>
+        <td>20.6 KB</td>
+      </tr>
+
+      <tr>
+        <td>7</td>
+        <td>
+          <a href="./report-2026-08-19-18.html">2026-08-19 18:00</a>
+          
+        </td>
+        <td>18.2 KB</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="footer">
+    自动更新 · 每次爬取完成后自动部署最新报告<br>
+    数据由 Puppeteer 自动采集
+  </div>
+</div>
+</body>
+</html>
