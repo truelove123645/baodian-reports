@@ -77,10 +77,19 @@
   a:hover { text-decoration: underline; }
   /* 左侧浮动目录 */
   .toc {
-    position: fixed; left: 0; top: 0; bottom: 0; width: 220px;
+    position: fixed; left: 0; top: 0; bottom: 0; width: 240px;
     background: #fff; border-right: 1px solid var(--border);
     padding: 1.5rem 1rem; overflow-y: auto; z-index: 100;
     box-shadow: 2px 0 8px rgba(0,0,0,0.04);
+    transform: translateX(-100%);
+    transition: transform 0.25s ease;
+  }
+  .toc:hover, .toc-trigger:hover + .toc, .toc.show {
+    transform: translateX(0);
+  }
+  .toc-trigger {
+    position: fixed; left: 0; top: 0; bottom: 0; width: 30px;
+    z-index: 99; cursor: pointer;
   }
   .toc h4 { font-size: 0.85rem; color: var(--accent); margin-bottom: 0.8rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--accent-light); }
   .toc ul { list-style: none; padding: 0; margin: 0; }
@@ -89,22 +98,21 @@
   .toc a:hover { background: var(--accent-light); color: var(--accent); }
   .toc .toc-sub { padding-left: 0.8rem; }
   .toc .toc-sub a { font-size: 0.72rem; color: #94a3b8; }
-  /* 主内容右移 */
-  .container { max-width: 1100px; margin-left: 240px; }
+  .container { max-width: 1200px; margin: 0 auto; }
   .table-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-  .table-wrapper table { width: 100%; table-layout: fixed; }
-  .table-wrapper td, .table-wrapper th { word-break: break-all; overflow-wrap: break-word; }
 </style>
 </head>
 <body>
-<!-- 左侧浮动目录 -->
-<nav class="toc">
+<!-- 左侧触发区域 -->
+<div class="toc-trigger"></div>
+<!-- 左侧悬浮目录 -->
+<nav class="toc" id="toc">
   <h4> 目录</h4>
   <ul>
     <li><a href="#section-summary">一、摘要</a></li>
     <li><a href="#section-overview">二、爆点总览</a>
       <ul class="toc-sub">
-        <li><a href="#section-catalog">2.1 爆款素材分类</a></li>
+        <li><a href="#section-catalog">2.1 产品监控清单</a></li>
         <li><a href="#section-matrix">2.2 话题矩阵</a></li>
         <li><a href="#section-data">2.3 数据表现</a></li>
         <li><a href="#section-bilibili">B站 TOP10</a></li>
@@ -1378,5 +1386,27 @@
 </div>
 
 </div>
+<script>
+(function(){
+  var toc = document.getElementById("toc");
+  var trigger = document.querySelector(".toc-trigger");
+  var showTimer = null;
+  var hideTimer = null;
+
+  function showToc() {
+    clearTimeout(hideTimer);
+    toc.classList.add("show");
+  }
+  function hideToc() {
+    clearTimeout(showTimer);
+    hideTimer = setTimeout(function(){ toc.classList.remove("show"); }, 200);
+  }
+
+  trigger.addEventListener("mouseenter", showToc);
+  toc.addEventListener("mouseenter", showToc);
+  trigger.addEventListener("mouseleave", hideToc);
+  toc.addEventListener("mouseleave", hideToc);
+})();
+</script>
 </body>
 </html>
